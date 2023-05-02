@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -8,7 +10,7 @@ module.exports = {
     extend: {
       colors: {
         black: '#4A4A4A',
-        indigo: {
+        primary: {
           default: '#5D76CB',
           light: '#eff1fa',
         },
@@ -21,5 +23,11 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(({ addBase }) => {
+      addBase({
+        html: { fontSize: '10px' },
+      });
+    }),
+  ],
 };

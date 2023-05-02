@@ -7,6 +7,12 @@ const routes = [
     meta: { layout: 'main' },
     component: () => import('@/views/HomeView.vue'),
   },
+  {
+    path: '/menu',
+    name: 'menu',
+    meta: { layout: 'empty' },
+    component: () => import('@/views/MenuView.vue'),
+  },
 ];
 
 const router = createRouter({
