@@ -25,6 +25,18 @@ const routes = [
     meta: { layout: 'basic', title: 'Авторизация' },
     component: () => import('@/views/LoginView.vue'),
   },
+  {
+    path: '/pass',
+    name: 'pass',
+    meta: { layout: 'main', title: 'Электронный пропуск' },
+    component: () => import('@/views/PassView.vue'),
+  },
+  {
+    path: '/profile/edit',
+    name: 'editProfile',
+    meta: { layout: 'main', title: 'Личный кабинет' },
+    component: () => import('@/views/EditProfileView.vue'),
+  },
 ];
 
 const router = createRouter({
