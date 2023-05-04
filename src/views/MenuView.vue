@@ -14,13 +14,13 @@
           <li v-for="item in menu" :key="item.name">
             <router-link class="flex items-center gap-8" :to="item.link">
               <div
-                class="flex items-center justify-center w-16 h-16 bg-gray-200 rounded-lg shadow-md"
+                class="flex items-center justify-center h-20 w-20 bg-gray-200 rounded-lg shadow-md"
               >
-                <svg width="16" height="16" class="fill-primary-default">
+                <svg width="20" height="20" class="fill-primary-default">
                   <use :xlink:href="'/img/icons/sprite.svg#'+item.name"></use>
                 </svg>
               </div>
-              <span class="text-xl text-gray-default">{{item.title}}</span>
+              <span class="text-2xl text-gray-default">{{item.title}}</span>
               <svg width="8" height="15" class="ml-auto fill-primary-default">
                 <use xlink:href="/img/icons/sprite.svg#arrow-right"></use>
               </svg>
@@ -37,7 +37,7 @@
       <svg width="37" height="39" class="fill-white">
         <use xlink:href="/img/icons/sprite.svg#support"></use>
       </svg>
-      <span class="text-xl text-white">Психологическая поддержка</span>
+      <span class="text-2xl text-white">Психологическая поддержка</span>
     </router-link>
   </div>
 </template>
@@ -51,7 +51,7 @@ export default {
         {
           title: 'Личный кабинет',
           name: 'profile',
-          link: '/',
+          link: '/menu',
         },
         {
           title: 'Расписание',
