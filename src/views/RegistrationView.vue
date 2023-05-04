@@ -3,11 +3,8 @@
     <form class="flex flex-col w-full gap-8">
       <label for="job" class="flex flex-col justify-start">
         <span class="text-2xl text-gray-default mb-2">Должность</span>
-        <select
-          id="job"
-          class="px-4 py-6 text-2xl text-black bg-primary-light rounded-lg outline-none"
-          name="job"
-        >
+        <!-- eslint-disable-next-line max-len -->
+        <select id="job" class="h-[52px] indent-4 px-4 py-6 text-2xl text-black bg-primary-light rounded-lg outline-none" name="job">
           <option value="default" selected>Выберите должность</option>
           <option value="teacher">Преподаватель</option>
         </select>

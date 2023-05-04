@@ -56,24 +56,24 @@ export default {
         {
           title: 'Расписание',
           name: 'schedule',
-          link: '/',
+          link: '/login',
         },
         {
           title: 'Библиотека',
           name: 'library',
-          link: '/',
+          link: '/registration',
         },
         {
           title: 'Форум',
           name: 'forum',
-          link: '/',
+          link: '/pass',
         },
       ],
       [
         {
           title: 'Одногруппники',
           name: 'friends',
-          link: '/',
+          link: '/profile/edit',
         },
         {
           title: 'Преподаватели',
