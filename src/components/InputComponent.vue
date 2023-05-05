@@ -6,6 +6,7 @@
       class="px-4 py-6 text-2xl text-black bg-primary-light rounded-lg outline-none"
       :type="type"
       :value="value"
+      :disabled="disabled"
     >
   </label>
 </template>
@@ -16,6 +17,7 @@ export default {
   props: {
     name: {
       required: true,
+      type: String,
     },
     type: {
       default: 'text',
@@ -25,6 +27,9 @@ export default {
     },
     title: {
       default: '',
+    },
+    disabled: {
+      default: false,
     },
   },
 };

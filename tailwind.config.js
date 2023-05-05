@@ -25,6 +25,9 @@ module.exports = {
       shadow: {
         md: '0px 6px 0px 25px rgba(74, 74, 74, 0.15)',
       },
+      fontSize: {
+        sm: '1.1rem',
+      },
     },
   },
   plugins: [

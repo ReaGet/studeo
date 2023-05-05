@@ -37,6 +37,24 @@ const routes = [
     meta: { layout: 'main', title: 'Личный кабинет' },
     component: () => import('@/views/EditProfileView.vue'),
   },
+  {
+    path: '/profile/:id',
+    name: 'profile',
+    meta: { title: 'Профиль' },
+    component: () => import('@/views/ProfileView.vue'),
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    meta: { layout: 'main', title: 'Настройки' },
+    component: () => import('@/views/SettingsView.vue'),
+  },
+  {
+    path: '/news',
+    name: 'news',
+    meta: { layout: 'main', title: 'Новости', action: 'addNews' },
+    component: () => import('@/views/NewsView.vue'),
+  },
 ];
 
 const router = createRouter({

@@ -6,6 +6,11 @@
       </svg>
     </router-link>
     <h1 class="text-3xl text-primary-default font-bold">{{ title }}</h1>
+    <router-link v-if="$route.meta.action" class="absolute right-0" to="/">
+      <svg class="stroke-primary-default" width="25" height="16">
+        <use xlink:href="/img/icons/sprite.svg#add"></use>
+      </svg>
+    </router-link>
   </header>
   <router-view></router-view>
 </template>
