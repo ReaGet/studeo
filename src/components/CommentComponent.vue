@@ -5,7 +5,7 @@
       src="/img/images/avatar-anime.png"
       alt="name"
     >
-    <div class="flex flex-col pt-1 gap-4">
+    <div class="flex flex-col pt-1 gap-2">
       <div class="flex flex-col gap-1">
         <span class="text-lg leading-[1.125rem] text-black font-bold">Елена Николаевна</span>
         <span class="text-sm leading-[1.1rem] text-gray-300">1 мин</span>

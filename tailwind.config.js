@@ -22,8 +22,9 @@ module.exports = {
           100: '#fafafa',
         },
       },
-      shadow: {
+      boxShadow: {
         md: '0px 6px 0px 25px rgba(74, 74, 74, 0.15)',
+        lg: '0px 16px 30px rgba(74, 74, 74, 0.07)',
       },
       fontSize: {
         sm: '1.1rem',
