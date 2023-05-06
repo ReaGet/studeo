@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import CheckboxComponent from '@/components/CheckboxComponent.vue';
+import CheckboxComponent from '@/components/ui/CheckboxComponent.vue';
 
 export default {
   components: {

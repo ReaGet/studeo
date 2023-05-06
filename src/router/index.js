@@ -52,7 +52,7 @@ const routes = [
   {
     path: '/news',
     name: 'news',
-    meta: { layout: 'main', title: 'Новости', action: 'addNews' },
+    meta: { layout: 'main', title: 'Новости', action: 'add' },
     component: () => import('@/views/NewsView.vue'),
   },
   {
@@ -66,6 +66,24 @@ const routes = [
     name: 'newsCreate',
     meta: { layout: 'main', title: 'Новость' },
     component: () => import('@/views/NewsCreateView.vue'),
+  },
+  {
+    path: '/forum',
+    name: 'forum',
+    meta: { layout: 'main', title: 'Форум', action: 'add' },
+    component: () => import('@/views/ForumView.vue'),
+  },
+  {
+    path: '/forum/:id',
+    name: 'singleQuestion',
+    meta: { layout: 'main' },
+    component: () => import('@/views/SingleQuestionView.vue'),
+  },
+  {
+    path: '/forum/create',
+    name: 'forumCreate',
+    meta: { layout: 'main', title: 'Вопрос' },
+    component: () => import('@/views/ForumCreateView.vue'),
   },
 ];
 

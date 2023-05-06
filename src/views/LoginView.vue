@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import VInput from '@/components/InputComponent.vue';
+import VInput from '@/components/ui/InputComponent.vue';
 
 export default {
   components: { VInput },
