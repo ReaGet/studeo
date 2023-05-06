@@ -7,6 +7,7 @@
       :type="type"
       :value="value"
       :disabled="disabled"
+      :placeholder="placeholder"
     >
   </label>
 </template>
@@ -30,6 +31,9 @@ export default {
     },
     disabled: {
       default: false,
+    },
+    placeholder: {
+      default: '',
     },
   },
 };

@@ -55,6 +55,18 @@ const routes = [
     meta: { layout: 'main', title: 'Новости', action: 'addNews' },
     component: () => import('@/views/NewsView.vue'),
   },
+  {
+    path: '/news/:id',
+    name: 'singleNews',
+    meta: { layout: 'main' },
+    component: () => import('@/views/SingleNewsView.vue'),
+  },
+  {
+    path: '/news/create',
+    name: 'newsCreate',
+    meta: { layout: 'main', title: 'Новость' },
+    component: () => import('@/views/NewsCreateView.vue'),
+  },
 ];
 
 const router = createRouter({
