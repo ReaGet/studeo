@@ -14,7 +14,7 @@
           <li v-for="item in menu" :key="item.name">
             <router-link class="flex items-center gap-8" :to="item.link">
               <div
-                class="flex items-center justify-center h-20 w-20 bg-gray-200 rounded-lg shadow-md"
+                class="flex items-center justify-center h-20 w-20 bg-gray-200 rounded-lg shadow-sm"
               >
                 <svg width="20" height="20" class="fill-primary-default">
                   <use :xlink:href="'/img/icons/sprite.svg#'+item.name"></use>

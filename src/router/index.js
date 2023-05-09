@@ -133,6 +133,12 @@ const routes = [
     meta: { layout: 'main', title: 'Расписание занятий' },
     component: () => import('@/views/ScheduleView.vue'),
   },
+  {
+    path: '/diary',
+    name: 'diary',
+    meta: { layout: 'main', title: 'Успеваемость' },
+    component: () => import('@/views/DiaryView.vue'),
+  },
 ];
 
 const router = createRouter({

@@ -17,13 +17,16 @@ module.exports = {
         },
         gray: {
           default: '#767676',
+          500: '#7e7e7e',
+          400: '#d0d0d0',
           300: '#4a4a4a80',
           200: '#F5F5F5',
           100: '#fafafa',
         },
       },
       boxShadow: {
-        md: '0px 6px 0px 25px rgba(74, 74, 74, 0.15)',
+        sm: '0px 6px 15px rgba(74, 74, 74, 0.125)',
+        md: '0px 6px 25px rgba(74, 74, 74, 0.15)',
         lg: '0px 16px 30px rgba(74, 74, 74, 0.07)',
       },
       fontSize: {
