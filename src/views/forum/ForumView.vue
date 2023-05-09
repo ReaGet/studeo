@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import QuestionComponent from '@/components/QuestionComponent.vue';
+import QuestionComponent from '@/components/QuestionListItem.vue';
 
 export default {
   components: {

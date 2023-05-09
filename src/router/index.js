@@ -103,6 +103,24 @@ const routes = [
     meta: { layout: 'main', title: 'Статья' },
     component: () => import('@/views/post/PostCreateView.vue'),
   },
+  {
+    path: '/teachers',
+    name: 'teachers',
+    meta: { layout: 'main', title: 'Преподаватели' },
+    component: () => import('@/views/UsersView.vue'),
+  },
+  {
+    path: '/friends',
+    name: 'friends',
+    meta: { layout: 'main', title: 'Преподаватели' },
+    component: () => import('@/views/UsersView.vue'),
+  },
+  {
+    path: '/chat',
+    name: 'chat',
+    meta: { layout: 'main', title: 'Чат' },
+    component: () => import('@/views/ChatListView.vue'),
+  },
 ];
 
 const router = createRouter({

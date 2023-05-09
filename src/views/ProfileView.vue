@@ -19,7 +19,7 @@
       </div>
       <!-- eslint-disable-next-line max-len -->
       <button class="absolute flex items-center justify-center w-16 h-16 bottom-0 -right-20">
-        <svg width="40" height="40">
+        <svg class="fill-primary-default" width="40" height="40">
           <use xlink:href="/img/icons/sprite.svg#message"></use>
         </svg>
       </button>

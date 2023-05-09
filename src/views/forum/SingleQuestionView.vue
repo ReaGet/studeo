@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import CommentComponent from '@/components/CommentComponent.vue';
+import CommentComponent from '@/components/CommentListItem.vue';
 import VTextarea from '@/components/ui/TextareaComponent.vue';
 
 export default {

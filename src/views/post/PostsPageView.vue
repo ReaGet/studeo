@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import NewsComponent from '@/components/PostComponent.vue';
+import NewsComponent from '@/components/PostListItem.vue';
 
 export default {
   components: {
