@@ -127,6 +127,12 @@ const routes = [
     meta: {},
     component: () => import('@/views/chat/SingleChatView.vue'),
   },
+  {
+    path: '/schedule',
+    name: 'schedule',
+    meta: { layout: 'main', title: 'Расписание занятий' },
+    component: () => import('@/views/ScheduleView.vue'),
+  },
 ];
 
 const router = createRouter({
