@@ -8,6 +8,7 @@
       :value="value"
       :disabled="disabled"
       :placeholder="placeholder"
+      @input="handleInput"
     >
   </label>
 </template>
@@ -34,6 +35,11 @@ export default {
     },
     placeholder: {
       default: '',
+    },
+  },
+  methods: {
+    handleInput(event) {
+      this.$emit('oninput', event.target.value);
     },
   },
 };
