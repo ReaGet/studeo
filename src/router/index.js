@@ -35,13 +35,13 @@ const routes = [
     path: '/profile/edit',
     name: 'editProfile',
     meta: { layout: 'main', title: 'Личный кабинет' },
-    component: () => import('@/views/EditProfileView.vue'),
+    component: () => import('@/views/profile/EditProfileView.vue'),
   },
   {
     path: '/profile/:id',
     name: 'profile',
     meta: { title: 'Профиль' },
-    component: () => import('@/views/ProfileView.vue'),
+    component: () => import('@/views/profile/ProfileView.vue'),
   },
   {
     path: '/settings',
@@ -119,7 +119,13 @@ const routes = [
     path: '/chat',
     name: 'chat',
     meta: { layout: 'main', title: 'Чат' },
-    component: () => import('@/views/ChatListView.vue'),
+    component: () => import('@/views/chat/ChatListView.vue'),
+  },
+  {
+    path: '/chat/:id',
+    name: 'singleChat',
+    meta: {},
+    component: () => import('@/views/chat/SingleChatView.vue'),
   },
 ];
 

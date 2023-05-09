@@ -6,7 +6,7 @@
       @input="handleInput"
       @keydown.enter="handleEnter"
       cols="30"
-      rows="7"
+      :rows="rows"
       ref="textarea"
       v-model.trim="text"
       :placeholder="placeholder"
@@ -34,6 +34,14 @@ export default {
     placeholder: {
       default: '',
     },
+    rows: {
+      type: Number,
+      default: 7,
+    },
+    minHeight: {
+      type: Number,
+      default: 170,
+    },
   },
   data() {
     return {
@@ -53,7 +61,7 @@ export default {
     },
     handleTextAreaSize() {
       this.$refs.textarea.style.height = '0px';
-      const height = Math.max(this.$refs.textarea.scrollHeight, 170);
+      const height = Math.max(this.$refs.textarea.scrollHeight, this.minHeight);
       this.$refs.textarea.style.height = `${height}px`;
     },
     handleEnter(event) {

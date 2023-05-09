@@ -89,4 +89,8 @@
         <path d="M14 26C20.6275 26 26 20.6275 26 14C26 7.37259 20.6275 2 14 2C7.37259 2 2 7.37259 2 14C2 15.9835 2.48124 17.8547 3.33333 19.5029L2 26L8.49707 24.6667C10.1454 25.5188 12.0165 26 14 26Z" stroke="#5D76CB" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
     </symbol>
 
+    <symbol id="send-message" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M37 20L3 3L7.25 20M37 20L3 37L7.25 20M37 20H7.25" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+
 </svg>
