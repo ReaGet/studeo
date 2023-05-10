@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     handleInput(event) {
-      this.$emit('oninput', event.target.value);
+      this.$emit('oninput', event.target.value.trim());
     },
   },
 };

@@ -2,13 +2,13 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
   {
-    path: '/menu',
+    path: '/',
     name: 'home',
     meta: { layout: 'main' },
     component: () => import('@/views/HomeView.vue'),
   },
   {
-    path: '/',
+    path: '/menu',
     name: 'menu',
     meta: { layout: 'empty' },
     component: () => import('@/views/MenuView.vue'),

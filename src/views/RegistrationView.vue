@@ -1,5 +1,6 @@
+<!-- eslint-disable -->
 <template>
-  <div class="w-full">
+  <div class="w-full pb-6">
     <form
       class="flex flex-col w-full gap-8"
       @submit.prevent="handleSubmit"
@@ -7,9 +8,13 @@
       <v-input :name="'name'" :title="'ФИО'" @oninput="(value) => (name = value)" />
       <label for="job" class="flex flex-col justify-start">
         <span class="text-2xl text-gray-default mb-2">Должность</span>
-        <!-- eslint-disable-next-line max-len -->
-        <select id="job" class="h-[52px] indent-4 px-4 py-6 text-2xl text-black bg-primary-light rounded-lg outline-none" name="job">
-          <option value="default" selected>Выберите должность</option>
+        <select
+          id="job"
+          class="h-[52px] indent-4 px-4 py-6 text-2xl text-black bg-primary-light rounded-lg outline-none"
+          name="job"
+          v-model="job"
+        >
+          <option value="default" selected="selected">Выберите должность</option>
           <option value="teacher">Преподаватель</option>
         </select>
       </label>
@@ -29,6 +34,10 @@
       <button
         class="px-4 py-6 mt-14 text-2xl text-white bg-primary-default rounded-lg outline-none"
       >Зарегистрироваться</button>
+      <router-link
+        class="mx-auto text-2xl text-primary-default"
+        to="/login"
+      >Авторизоваться?</router-link>
     </form>
   </div>
 </template>
@@ -41,13 +50,14 @@ export default {
   data: () => ({
     name: '',
     email: '',
-    job: '',
+    job: 'default',
     password: '',
     password_verify: '',
   }),
   methods: {
     async handleSubmit() {
-      if (this.password !== this.password_verify) {
+      if (this.password !== this.password_verify
+        || this.job === 'default') {
         return;
       }
 
@@ -57,9 +67,12 @@ export default {
         password: this.password,
         job: this.job,
       };
-      console.log(formData);
-
-      await this.$store.dispatch('register', formData);
+      try {
+        await this.$store.dispatch('register', formData);
+        this.$router.push('/menu');
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
