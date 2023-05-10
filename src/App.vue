@@ -14,6 +14,7 @@
 import MainLayout from '@/layouts/MainLayout.vue';
 import EmptyLayout from '@/layouts/EmptyLayout.vue';
 import BasicLayout from '@/layouts/BasicLayout.vue';
+import { auth } from '@/utils/firebase';
 
 export default {
   components: {
@@ -25,6 +26,11 @@ export default {
     layout() {
       return `${this.$route.meta.layout || 'empty'}-layout`;
     },
+  },
+  async mounted() {
+    auth.onAuthStateChanged((user) => {
+      this.$store.dispatch('fetchUser', user);
+    });
   },
 };
 </script>

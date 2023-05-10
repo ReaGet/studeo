@@ -1,5 +1,6 @@
 /* eslint-disable */
 import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 
 const firebaseApp = initializeApp({
   apiKey: 'AIzaSyCYs3REfSoqual_OtfwU816FAuHCOLlQNM',
@@ -12,4 +13,6 @@ const firebaseApp = initializeApp({
     'https://studeo-8a254-default-rtdb.europe-west1.firebasedatabase.app/',
 });
 
-export default firebaseApp;
+const auth = getAuth(firebaseApp);
+
+export { firebaseApp, auth };

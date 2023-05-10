@@ -1,12 +1,12 @@
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col pb-6">
     <div class="flex items-center py-6 gap-6 border-b border-gray-default">
       <div class="w-[7rem] h-[7rem] rounded-lg bg-primary-light">
         <svg width="80" height="80" class="-mt-[1rem]">
           <use xlink:href="/img/icons/sprite.svg#avatar-girl"></use>
         </svg>
       </div>
-      <span class="text-3xl text-black font-bold">Привет, Анастасия!</span>
+      <span class="text-3xl text-black font-bold">Привет, {{ name }}!</span>
     </div>
     <div class="flex flex-col divide-y divide-gray-default">
       <nav v-for="(menu, i) in menuItems" :key="i" >
@@ -83,5 +83,11 @@ export default {
       ],
     ],
   }),
+  computed: {
+    name() {
+      const value = this.$store.getters.user?.data?.name;
+      return value || 'User';
+    },
+  },
 };
 </script>
