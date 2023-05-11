@@ -1,5 +1,6 @@
+<!-- eslint-disable -->
 <template>
-  <div class="flex flex-col items-center gap-16">
+  <div class="flex flex-col items-center pb-6 gap-16">
     <div class="relative">
       <div class="border-2 border-primary-100 overflow-hidden rounded-md">
         <img
@@ -25,6 +26,10 @@
           class="px-4 py-6 mt-14 text-2xl text-white bg-primary-default rounded-lg outline-none"
         >Сохранить</button>
       </form>
+      <button
+        class="w-full px-4 py-4 mt-6 text-xl text-gray-default bg-primary-light rounded-lg outline-none"
+        @click="logout"
+      >Выйти</button>
     </div>
   </div>
 </template>
@@ -34,5 +39,11 @@ import VInput from '@/components/ui/InputComponent.vue';
 
 export default {
   components: { VInput },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout');
+      this.$router.push('/');
+    },
+  },
 };
 </script>
