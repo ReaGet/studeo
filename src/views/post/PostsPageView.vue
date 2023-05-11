@@ -1,19 +1,19 @@
 <template>
   <div class="flex flex-col pb-6 gap-6">
-    <NewsComponent
+    <PostListItem
       v-for="post in posts"
       :key="post.id"
       :post="post"
-    ></NewsComponent>
+    ></PostListItem>
   </div>
 </template>
 
 <script>
-import NewsComponent from '@/components/PostListItem.vue';
+import PostListItem from '@/components/PostListItem.vue';
 
 export default {
   components: {
-    NewsComponent,
+    PostListItem,
   },
   data: () => ({
     posts: [
