@@ -1,10 +1,13 @@
 <template>
   <header class="relative flex items-center justify-center py-14">
-    <router-link class="absolute left-0" to="/">
+    <button
+      class="absolute left-0"
+      @click="$router.go(-1)"
+    >
       <svg class="stroke-primary-default" width="25" height="16">
         <use xlink:href="/img/icons/sprite.svg#arrow-back"></use>
       </svg>
-    </router-link>
+    </button>
     <h1 class="text-3xl text-primary-default font-bold">{{ title }}</h1>
     <router-link v-if="$route.meta.action" class="absolute right-0" to="/">
       <svg class="stroke-primary-default" width="25" height="16">
@@ -21,6 +24,9 @@ export default {
   computed: {
     title() {
       return this.$route.meta?.title || '';
+    },
+    isBackRouteEnabled() {
+      return this.$route.meta?.back !== false;
     },
   },
 };

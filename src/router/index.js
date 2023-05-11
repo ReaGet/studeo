@@ -16,13 +16,13 @@ const routes = [
   {
     path: '/registration',
     name: 'registration',
-    meta: { layout: 'basic', title: 'Регистрация' },
+    meta: { layout: 'main', title: 'Регистрация', back: false },
     component: () => import('@/views/RegistrationView.vue'),
   },
   {
     path: '/login',
     name: 'login',
-    meta: { layout: 'basic', title: 'Авторизация' },
+    meta: { layout: 'main', title: 'Авторизация', back: false },
     component: () => import('@/views/LoginView.vue'),
   },
   {

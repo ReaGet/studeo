@@ -32,7 +32,7 @@
 
     <router-link
       class="flex items-center justify-center py-6 mt-6 bg-primary-default rounded-xl gap-6"
-      to="/"
+      to="/support"
     >
       <svg width="37" height="39" class="fill-white">
         <use xlink:href="/img/icons/sprite.svg#support"></use>
@@ -51,12 +51,12 @@ export default {
         {
           title: 'Личный кабинет',
           name: 'profile',
-          link: '/menu',
+          link: '/profile/edit',
         },
         {
           title: 'Расписание',
           name: 'schedule',
-          link: '/login',
+          link: '/schedule',
         },
         {
           title: 'Библиотека',
@@ -66,19 +66,19 @@ export default {
         {
           title: 'Форум',
           name: 'forum',
-          link: '/pass',
+          link: '/forum',
         },
       ],
       [
         {
           title: 'Одногруппники',
           name: 'friends',
-          link: '/profile/edit',
+          link: '/friends',
         },
         {
           title: 'Преподаватели',
           name: 'teachers',
-          link: '/',
+          link: '/teachers',
         },
       ],
     ],
