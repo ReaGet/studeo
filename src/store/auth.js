@@ -29,15 +29,31 @@ export default {
       await signOut(auth);
       commit('setUser', null);
     },
-    async register({ dispatch, commit }, { email, password, name, job }) {
+    async register({ dispatch, commit }, data) {
+      const params = {};
+      Object.keys(data).forEach((key) => {
+        if (key !== 'password') {
+          data[key] && (params[key] = data[key]);
+        }
+      });
       try {
-        const response = await createUserWithEmailAndPassword(auth, email, password);
+        const response = await createUserWithEmailAndPassword(auth, data.email, data.password);
         commit('setUser', response.user);
         const uid = response.user.uid;
-        await set(ref(database, `/users/${uid}/info`), {
-          job,
-          name,
-        });
+        await set(ref(database, `/users/${uid}/info`), params);
+      } catch (error) {
+        throw error;
+      }
+    },
+    async updateInfo({ dispatch, commit }, data) {
+      const params = {};
+      Object.keys(data).forEach((key) => {
+        data[key] && (params[key] = data[key]);
+      });
+      try {
+        commit('setUser', params);
+        const uid = auth.currentUser.uid;
+        await set(ref(database, `/users/${uid}/info`), params);
       } catch (error) {
         throw error;
       }
@@ -51,11 +67,15 @@ export default {
         const data = snapshot.val();
         commit('setLoggedIn', user !== null);
         if (user) {
-          commit('setUser', {
-            name: data.name,
-            job: data.job,
-            email: user.email
-          });
+          console.log(data);
+          const params = {};
+          if (data) {
+            Object.keys(data).forEach((key) => {
+              data[key] && (params[key] = data[key]);
+            });
+          }
+          console.log(params);
+          commit('setUser', params);
         } else {
           commit('setUser', null);
         }

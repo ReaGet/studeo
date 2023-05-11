@@ -18,10 +18,12 @@
       </button>
     </div>
     <div class="w-full">
-      <form class="flex flex-col w-full gap-8">
-        <v-input :title="'ФИО'" :name="'fio'" />
-        <v-input :title="'Дата рождения'" :name="'birth'" />
-        <v-input :title="'Группа'" :name="'group'" />
+      <form class="flex flex-col w-full gap-8" @submit.prevent="handleSubmit">
+        <v-input :title="'Фамилия'" :name="'firstname'" :value="userData?.firstname" @oninput="(value) => (user.firstname = value)" />
+        <v-input :title="'Имя'" :name="'lastname'" :value="userData?.lastname" @oninput="(value) => (user.lastname = value)" />
+        <v-input :title="'Отчество'" :name="'middlename'" :value="userData?.middlename" @oninput="(value) => (user.middlename = value)" />
+        <v-input :title="'Дата рождения'" :name="'birth'" :value="userData?.birth" @oninput="(value) => (user.birth = value)" />
+        <v-input v-if="userData?.job === 'student'" :title="'Группа'" :name="'group'" :value="userData?.group" @oninput="(value) => (user.group = value)" />
         <button
           class="px-4 py-6 mt-14 text-2xl text-white bg-primary-default rounded-lg outline-none"
         >Сохранить</button>
@@ -39,10 +41,30 @@ import VInput from '@/components/ui/InputComponent.vue';
 
 export default {
   components: { VInput },
+  data: () => ({
+    user: {},
+  }),
   methods: {
+    handleSubmit() {
+      this.$store.dispatch('updateInfo', this.user);
+    },
     logout() {
       this.$store.dispatch('logout');
       this.$router.push('/');
+    },
+  },
+  computed: {
+    userData() {
+      return this.$store.getters.user?.data;
+    },
+  },
+  watch: {
+    userData(newValue) {
+      if (newValue) {
+        Object.keys(newValue).forEach((key) => {
+          this.user[key] = newValue[key];
+        });
+      }
     },
   },
 };

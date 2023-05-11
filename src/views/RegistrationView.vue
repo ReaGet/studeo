@@ -5,7 +5,10 @@
       class="flex flex-col w-full gap-8"
       @submit.prevent="handleSubmit"
     >
-      <v-input :name="'name'" :title="'ФИО'" @oninput="(value) => (name = value)" />
+      <v-input :name="'lastname'" :title="'Фамилия'" @oninput="(value) => (lastname = value)" />
+      <v-input :name="'firstname'" :title="'Имя'" @oninput="(value) => (firstname = value)" />
+      <v-input :name="'middlename'" :title="'Отчество'" @oninput="(value) => (middlename = value)" />
+      <v-input :name="'birth'" :title="'Дата рождения'" :placeholder="'dd.mm.yyyy'" @oninput="(value) => (birth = value)" />
       <label for="job" class="flex flex-col justify-start">
         <span class="text-2xl text-gray-default mb-2">Должность</span>
         <select
@@ -16,8 +19,10 @@
         >
           <option value="default" selected="selected">Выберите должность</option>
           <option value="teacher">Преподаватель</option>
+          <option value="student">Студент</option>
         </select>
       </label>
+      <v-input v-if="job === 'student'" :name="'group'" :title="'Группа'" @oninput="(value) => (group = value)" />
       <v-input :name="'email'" :title="'Email'" @oninput="(value) => (email = value)" />
       <v-input
         :name="'password'"
@@ -48,7 +53,11 @@ import VInput from '@/components/ui/InputComponent.vue';
 export default {
   components: { VInput },
   data: () => ({
-    name: '',
+    firstname: '',
+    lastname: '',
+    middlename: '',
+    birth: '',
+    group: '',
     email: '',
     job: 'default',
     password: '',
@@ -62,7 +71,11 @@ export default {
       }
 
       const formData = {
-        name: this.name,
+        firstname: this.firstname,
+        lastname: this.lastname,
+        middlename: this.middlename,
+        birth: this.birth,
+        group: this.group,
         email: this.email,
         password: this.password,
         job: this.job,

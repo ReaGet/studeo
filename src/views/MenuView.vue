@@ -85,8 +85,8 @@ export default {
   }),
   computed: {
     name() {
-      const value = this.$store.getters.user?.data?.name;
-      return value || 'User';
+      const name = this.$store.getters.user?.data?.firstname;
+      return name || 'User';
     },
   },
 };
