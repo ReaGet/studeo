@@ -7,13 +7,13 @@
       <v-input
         :name="'email'"
         :title="'Email'"
-        @oninput="(value) => (email = value)"
+        v-model="email"
       />
       <v-input
         :name="'password'"
         :title="'Пароль'"
         :type="'password'"
-        @oninput="(value) => (password = value)"
+        v-model="password"
       />
       <button
         class="px-4 py-6 mt-14 text-2xl text-white bg-primary-default rounded-lg outline-none"

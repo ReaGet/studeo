@@ -5,7 +5,7 @@
       :id="name"
       class="px-4 py-6 text-2xl text-black bg-primary-light rounded-lg outline-none"
       :type="type"
-      :value="value"
+      :value="modelValue"
       :disabled="disabled"
       :placeholder="placeholder"
       @input="handleInput"
@@ -17,15 +17,15 @@
 export default {
   name: 'v-input',
   props: {
+    modelValue: {
+      default: '',
+    },
     name: {
       required: true,
       type: String,
     },
     type: {
       default: 'text',
-    },
-    value: {
-      default: '',
     },
     title: {
       default: '',
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     handleInput(event) {
-      this.$emit('oninput', event.target.value.trim());
+      this.$emit('update:modelValue', event.target.value.trim());
     },
   },
 };

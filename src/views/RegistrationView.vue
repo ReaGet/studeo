@@ -5,10 +5,10 @@
       class="flex flex-col w-full gap-8"
       @submit.prevent="handleSubmit"
     >
-      <v-input :name="'lastname'" :title="'Фамилия'" @oninput="(value) => (lastname = value)" />
-      <v-input :name="'firstname'" :title="'Имя'" @oninput="(value) => (firstname = value)" />
-      <v-input :name="'middlename'" :title="'Отчество'" @oninput="(value) => (middlename = value)" />
-      <v-input :name="'birth'" :title="'Дата рождения'" :placeholder="'dd.mm.yyyy'" @oninput="(value) => (birth = value)" />
+      <v-input :name="'lastname'" :title="'Фамилия'" v-model="lastname" />
+      <v-input :name="'firstname'" :title="'Имя'" v-model="firstname" />
+      <v-input :name="'middlename'" :title="'Отчество'" v-model="middlename" />
+      <v-input :name="'birth'" :title="'Дата рождения'" :placeholder="'dd.mm.yyyy'" v-model="birth" />
       <label for="job" class="flex flex-col justify-start">
         <span class="text-2xl text-gray-default mb-2">Должность</span>
         <select
@@ -22,19 +22,19 @@
           <option value="student">Студент</option>
         </select>
       </label>
-      <v-input v-if="job === 'student'" :name="'group'" :title="'Группа'" @oninput="(value) => (group = value)" />
-      <v-input :name="'email'" :title="'Email'" @oninput="(value) => (email = value)" />
+      <v-input v-if="job === 'student'" :name="'group'" :title="'Группа'" v-model="group" />
+      <v-input :name="'email'" :title="'Email'" v-model="email" />
       <v-input
         :name="'password'"
         :title="'Пароль'"
         :type="'password'"
-        @oninput="(value) => (password = value)"
+        v-model="password"
       />
       <v-input
         :name="'password_verify'"
         :title="'Повторите пароль'"
         :type="'password'"
-        @oninput="(value) => (password_verify = value)"
+        v-model="password_verify"
       />
       <button
         class="px-4 py-6 mt-14 text-2xl text-white bg-primary-default rounded-lg outline-none"

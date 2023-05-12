@@ -1,11 +1,11 @@
 <!-- eslint-disable -->
 <template>
   <form class="flex flex-col w-full gap-8" @submit.prevent="handleSubmit">
-    <v-input :title="'Фамилия'" :name="'lastname'" :value="userData.lastname" @oninput="(value) => (user.lastname = value)" />
-    <v-input :title="'Имя'" :name="'firstname'" :value="userData.firstname" @oninput="(value) => (user.firstname = value)" />
-    <v-input :title="'Отчество'" :name="'middlename'" :value="userData.middlename" @oninput="(value) => (user.middlename = value)" />
-    <v-input :title="'Дата рождения'" :name="'birth'" :value="userData.birth" @oninput="(value) => (user.birth = value)" />
-    <v-input v-if="userData.job === 'student'" :title="'Группа'" :name="'group'" :value="userData.group" @oninput="(value) => (user.group = value)" />
+    <v-input :title="'Фамилия'" :name="'lastname'" v-model="user.lastname" />
+    <v-input :title="'Имя'" :name="'firstname'" v-model="user.firstname" />
+    <v-input :title="'Отчество'" :name="'middlename'" v-model="user.middlename" />
+    <v-input :title="'Дата рождения'" :name="'birth'" v-model="user.birth" />
+    <v-input v-if="userData.job === 'student'" :title="'Группа'" :name="'group'" v-model="user.group" /> 
     <button
       class="px-4 py-6 mt-14 text-2xl text-white bg-primary-default rounded-lg outline-none"
     >Сохранить</button>
