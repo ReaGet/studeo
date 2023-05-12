@@ -18,11 +18,16 @@
       </button>
     </div>
     <div class="w-full">
-      <EditProfileForm
-        :user-data="userData"
-        :key="userData.email"
-        @onsubmit="handleSubmit"
-      ></EditProfileForm>
+      <form class="flex flex-col w-full gap-8" @submit.prevent="handleSubmit">
+        <v-input :title="'Фамилия'" :name="'lastname'" v-model="user.lastname" />
+        <v-input :title="'Имя'" :name="'firstname'" v-model="user.firstname" />
+        <v-input :title="'Отчество'" :name="'middlename'" v-model="user.middlename" />
+        <v-input :title="'Дата рождения'" :name="'birth'" v-model="user.birth" />
+        <v-input v-if="user.job === 'student'" :title="'Группа'" :name="'group'" v-model="user.group" /> 
+        <button
+          class="px-4 py-6 mt-14 text-2xl text-white bg-primary-default rounded-lg outline-none"
+        >Сохранить</button>
+      </form>
       <button
         class="w-full px-4 py-4 mt-6 text-xl text-gray-default bg-primary-light rounded-lg outline-none"
         @click="logout"
@@ -32,22 +37,47 @@
 </template>
 
 <script>
-import EditProfileForm from '@/components/forms/EditProfileForm.vue';
+import VInput from '@/components/ui/InputComponent.vue';
 
 export default {
-  components: { EditProfileForm },
+  components: { VInput },
+  data() {
+    return {
+      user: {
+        firstname: '',
+        lastname: '',
+        middlename: '',
+        birth: '',
+        job: '',
+        group: '',
+      },
+    };
+  },
   methods: {
-    handleSubmit(data) {
-      this.$store.dispatch('updateInfo', data);
+    handleSubmit() {
+      this.$store.dispatch('updateInfo', this.user);
     },
     logout() {
       this.$store.dispatch('logout');
       this.$router.push('/');
     },
   },
+  mounted() {
+    if (this.userData) {
+      this.user = { ...this.userData };
+    }
+  },
   computed: {
     userData() {
       return this.$store.getters.user?.data || {};
+    },
+  },
+  watch: {
+    userData: {
+      handler(newValue) {
+        this.user = { ...newValue };
+      },
+      deep: true,
     },
   },
 };
