@@ -40,6 +40,23 @@ export default {
         }
       });
     },
+    async fetchFriends({ dispatch, commit }) {
+      const group = 
+      const db = getDatabase();
+      const ref = db.ref('users').orderByChild('group').equalTo()
+      onValue(info, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          const params = {};
+          Object.keys(data).forEach((key) => {
+            data[key] && (params[key] = data[key]);
+          });
+          commit('setUser', params);
+        } else {
+          commit('setUser', null);
+        }
+      });
+    },
   },
   getters: {
     user: (state) => state.user,
