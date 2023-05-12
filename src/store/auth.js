@@ -46,12 +46,10 @@ export default {
       }
     },
     async updateInfo({ dispatch, commit }, data) {
-      console.log(data);
       const params = {};
       Object.keys(data).forEach((key) => {
         data[key] && (params[key] = data[key]);
       });
-      console.log(params);
       try {
         const uid = await dispatch('getUid');
         await set(ref(database, `/users/${uid}/info`), params);
@@ -71,7 +69,6 @@ export default {
           Object.keys(data).forEach((key) => {
             data[key] && (params[key] = data[key]);
           });
-          console.log(params);
           commit('setUser', params);
         } else {
           commit('setUser', null);
