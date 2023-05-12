@@ -10,12 +10,6 @@ import { getDatabase, ref, set, onValue } from "firebase/database";
 const database = getDatabase(firebaseApp);
 
 export default {
-  state: {
-    user: {
-      loggedIn: false,
-      data: null,
-    },
-  },
   actions: {
     async login({ dispatch, commit }, { email, password }) {
       try {
@@ -28,7 +22,6 @@ export default {
     async logout({ commit }) {
       await signOut(auth);
       commit('setUser', null);
-      commit('setLoggedIn', false);
     },
     async register({ dispatch, commit }, data) {
       const params = {};
@@ -46,50 +39,9 @@ export default {
         throw error;
       }
     },
-    async updateInfo({ dispatch, commit }, data) {
-      const params = {};
-      Object.keys(data).forEach((key) => {
-        data[key] && (params[key] = data[key]);
-      });
-      try {
-        const uid = await dispatch('getUid');
-        await set(ref(database, `/users/${uid}/info`), params);
-        dispatch('fetchUserInfo');
-      } catch (error) {
-        throw error;
-      }
-    },
-    async fetchUserInfo({ dispatch, commit }) {
-      const uid = await dispatch('getUid');
-      const info = ref(database, `users/${uid}/info`);
-      onValue(info, (snapshot) => {
-        const data = snapshot.val();
-        commit('setLoggedIn', !!uid);
-        if (data) {
-          const params = {};
-          Object.keys(data).forEach((key) => {
-            data[key] && (params[key] = data[key]);
-          });
-          commit('setUser', params);
-        } else {
-          commit('setUser', null);
-        }
-      });
-    },
     getUid() {
       const user = auth.currentUser;
       return user ? user.uid : null;
-    },
-  },
-  getters: {
-    user: (state) => state.user,
-  },
-  mutations: {
-    setLoggedIn(state, value) {
-      state.user.loggedIn = value;
-    },
-    setUser(state, data) {
-      state.user.data = data;
     },
   },
 };
