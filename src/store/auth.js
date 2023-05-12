@@ -17,10 +17,10 @@ export default {
     },
   },
   actions: {
-    async login({ commit }, { email, password }) {
+    async login({ dispatch, commit }, { email, password }) {
       try {
         const response = await signInWithEmailAndPassword(auth, email, password);
-        commit('setUser', response.user);
+        dispatch('fetchUserInfo');
       } catch (error) {
         throw error;
       }
@@ -37,50 +37,51 @@ export default {
         }
       });
       try {
-        const response = await createUserWithEmailAndPassword(auth, data.email, data.password);
-        commit('setUser', response.user);
-        const uid = response.user.uid;
+        await createUserWithEmailAndPassword(auth, data.email, data.password);
+        const uid = await dispatch('getUid');
         await set(ref(database, `/users/${uid}/info`), params);
+        dispatch('fetchUserInfo');
       } catch (error) {
         throw error;
       }
     },
     async updateInfo({ dispatch, commit }, data) {
+      console.log(data);
       const params = {};
       Object.keys(data).forEach((key) => {
         data[key] && (params[key] = data[key]);
       });
+      console.log(params);
       try {
-        commit('setUser', params);
-        const uid = auth.currentUser.uid;
+        const uid = await dispatch('getUid');
         await set(ref(database, `/users/${uid}/info`), params);
+        dispatch('fetchUserInfo');
       } catch (error) {
         throw error;
       }
     },
-    async fetchUser({ dispatch, commit }, user) {
-      if (!user) {
-        return;
-      }
-      const info = ref(database, `users/${user.uid}/info`);
+    async fetchUserInfo({ dispatch, commit }) {
+      const uid = await dispatch('getUid');
+      const info = ref(database, `users/${uid}/info`);
       onValue(info, (snapshot) => {
         const data = snapshot.val();
-        commit('setLoggedIn', user !== null);
-        if (user) {
-          console.log(data);
+        commit('setLoggedIn', !!uid);
+        if (data) {
           const params = {};
-          if (data) {
-            Object.keys(data).forEach((key) => {
-              data[key] && (params[key] = data[key]);
-            });
-          }
+          Object.keys(data).forEach((key) => {
+            data[key] && (params[key] = data[key]);
+          });
           console.log(params);
           commit('setUser', params);
         } else {
           commit('setUser', null);
         }
       });
-    }
+    },
+    getUid() {
+      const user = auth.currentUser;
+      return user ? user.uid : null;
+    },
   },
   getters: {
     user: (state) => state.user,

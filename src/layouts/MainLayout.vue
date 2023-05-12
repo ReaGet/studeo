@@ -29,5 +29,6 @@ export default {
       return this.$route.meta?.back !== false;
     },
   },
+  mounted() {},
 };
 </script>
