@@ -1,10 +1,5 @@
 /* eslint-disable */
-import { firebaseApp, auth } from "@/utils/firebase";
-import {
-  signInWithEmailAndPassword,
-  signOut,
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
+import { firebaseApp } from "@/utils/firebase";
 import { getDatabase, ref, set, onValue } from "firebase/database";
 
 const database = getDatabase(firebaseApp);

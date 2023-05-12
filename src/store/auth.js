@@ -5,7 +5,7 @@ import {
   signOut,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { getDatabase, ref, set, onValue } from "firebase/database";
+import { getDatabase, ref, set } from "firebase/database";
 
 const database = getDatabase(firebaseApp);
 
