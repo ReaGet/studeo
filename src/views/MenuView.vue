@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col pb-6">
-    <div class="flex items-center py-6 gap-6 border-b border-gray-default">
+    <div class="flex items-center py-6 gap-6 border-b border-gray-light">
       <div class="w-[7rem] h-[7rem] rounded-lg bg-primary-light">
         <svg width="80" height="80" class="-mt-[1rem]">
           <use xlink:href="/img/icons/sprite.svg#avatar-girl"></use>
@@ -8,7 +8,7 @@
       </div>
       <span class="text-3xl text-black font-bold">Привет, {{ name }}!</span>
     </div>
-    <div class="flex flex-col divide-y divide-gray-default">
+    <div class="flex flex-col divide-y divide-gray-light">
       <nav v-for="(menu, i) in menuItems" :key="i" >
         <ul class="flex flex-col py-8 gap-6">
           <li v-for="item in menu" :key="item.name">

@@ -19,7 +19,7 @@ export default {
   actions: {
     async login({ dispatch, commit }, { email, password }) {
       try {
-        const response = await signInWithEmailAndPassword(auth, email, password);
+        await signInWithEmailAndPassword(auth, email, password);
         dispatch('fetchUserInfo');
       } catch (error) {
         throw error;
@@ -28,6 +28,7 @@ export default {
     async logout({ commit }) {
       await signOut(auth);
       commit('setUser', null);
+      commit('setLoggedIn', false);
     },
     async register({ dispatch, commit }, data) {
       const params = {};

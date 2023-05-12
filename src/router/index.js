@@ -1,142 +1,170 @@
+/* eslint-disable */
 import { createRouter, createWebHistory } from 'vue-router';
+import store from '@/store';
+import { auth } from '@/utils/firebase';
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    meta: { layout: 'main' },
+    meta: { layout: 'main', auth: false },
     component: () => import('@/views/HomeView.vue'),
   },
   {
     path: '/menu',
     name: 'menu',
-    meta: { layout: 'empty' },
+    meta: { layout: 'empty', auth: true },
     component: () => import('@/views/MenuView.vue'),
   },
   {
     path: '/registration',
     name: 'registration',
-    meta: { layout: 'main', title: 'Регистрация', back: false },
+    meta: {
+      layout: 'main',
+      title: 'Регистрация',
+      back: false,
+      auth: false,
+    },
     component: () => import('@/views/RegistrationView.vue'),
   },
   {
     path: '/login',
     name: 'login',
-    meta: { layout: 'main', title: 'Авторизация', back: false },
+    meta: {
+      layout: 'main',
+      title: 'Авторизация',
+      back: false,
+      auth: false,
+    },
     component: () => import('@/views/LoginView.vue'),
   },
   {
     path: '/pass',
     name: 'pass',
-    meta: { layout: 'main', title: 'Электронный пропуск' },
+    meta: { layout: 'main', title: 'Электронный пропуск', auth: true },
     component: () => import('@/views/PassView.vue'),
   },
   {
     path: '/profile/edit',
     name: 'editProfile',
-    meta: { layout: 'main', title: 'Личный кабинет' },
+    meta: { layout: 'main', title: 'Личный кабинет', auth: true },
     component: () => import('@/views/profile/EditProfileView.vue'),
   },
   {
     path: '/profile/:id',
     name: 'profile',
-    meta: { title: 'Профиль' },
+    meta: { title: 'Профиль', auth: true },
     component: () => import('@/views/profile/ProfileView.vue'),
   },
   {
     path: '/settings',
     name: 'settings',
-    meta: { layout: 'main', title: 'Настройки' },
+    meta: { layout: 'main', title: 'Настройки', auth: true },
     component: () => import('@/views/SettingsView.vue'),
   },
   {
     path: '/news',
     name: 'news',
-    meta: { layout: 'main', title: 'Новости', action: 'add' },
+    meta: {
+      layout: 'main',
+      title: 'Новости',
+      action: 'add',
+      auth: true,
+    },
     component: () => import('@/views/post/PostsPageView.vue'),
   },
   {
     path: '/news/:id',
     name: 'singleNews',
-    meta: { layout: 'main' },
+    meta: { layout: 'main', auth: true },
     component: () => import('@/views/post/SinglePostView.vue'),
   },
   {
     path: '/news/create',
     name: 'newsCreate',
-    meta: { layout: 'main', title: 'Новость' },
+    meta: { layout: 'main', title: 'Новость', auth: true },
     component: () => import('@/views/post/PostCreateView.vue'),
   },
   {
     path: '/forum',
     name: 'forum',
-    meta: { layout: 'main', title: 'Форум', action: 'add' },
+    meta: {
+      layout: 'main',
+      title: 'Форум',
+      action: 'add',
+      auth: true,
+    },
     component: () => import('@/views/forum/ForumView.vue'),
   },
   {
     path: '/forum/:id',
     name: 'singleQuestion',
-    meta: { layout: 'main' },
+    meta: { layout: 'main', auth: true },
     component: () => import('@/views/forum/SingleQuestionView.vue'),
   },
   {
     path: '/forum/create',
     name: 'forumCreate',
-    meta: { layout: 'main', title: 'Вопрос' },
+    meta: { layout: 'main', title: 'Вопрос', auth: true },
     component: () => import('@/views/forum/ForumCreateView.vue'),
   },
   {
     path: '/support',
     name: 'support',
-    meta: { layout: 'main', title: 'Психологическая поддержка', action: 'add' },
+    meta: {
+      layout: 'main',
+      title: 'Психологическая поддержка',
+      action: 'add',
+      auth: true,
+    },
     component: () => import('@/views/post/PostsPageView.vue'),
   },
   {
     path: '/support/:id',
     name: 'singleSupport',
-    meta: { layout: 'main' },
+    meta: { layout: 'main', auth: true },
     component: () => import('@/views/post/SinglePostView.vue'),
   },
   {
     path: '/post/create',
     name: 'postCreate',
-    meta: { layout: 'main', title: 'Статья' },
+    meta: { layout: 'main', title: 'Статья', auth: true },
     component: () => import('@/views/post/PostCreateView.vue'),
   },
   {
     path: '/teachers',
     name: 'teachers',
-    meta: { layout: 'main', title: 'Преподаватели' },
+    meta: { layout: 'main', title: 'Преподаватели', auth: true },
     component: () => import('@/views/UsersView.vue'),
   },
   {
     path: '/friends',
     name: 'friends',
-    meta: { layout: 'main', title: 'Преподаватели' },
+    meta: { layout: 'main', title: 'Друзья', auth: true },
     component: () => import('@/views/UsersView.vue'),
   },
   {
     path: '/chat',
     name: 'chat',
-    meta: { layout: 'main', title: 'Чат' },
+    meta: { layout: 'main', title: 'Чат', auth: true },
     component: () => import('@/views/chat/ChatListView.vue'),
   },
   {
     path: '/chat/:id',
     name: 'singleChat',
-    meta: {},
+    meta: { auth: true },
     component: () => import('@/views/chat/SingleChatView.vue'),
   },
   {
     path: '/schedule',
     name: 'schedule',
-    meta: { layout: 'main', title: 'Расписание занятий' },
+    meta: { layout: 'main', title: 'Расписание занятий', auth: true },
     component: () => import('@/views/ScheduleView.vue'),
   },
   {
     path: '/diary',
     name: 'diary',
-    meta: { layout: 'main', title: 'Успеваемость' },
+    meta: { layout: 'main', title: 'Успеваемость', auth: true },
     component: () => import('@/views/DiaryView.vue'),
   },
 ];
@@ -145,4 +173,18 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+router.beforeEach((to, from, next) => {
+  const reqiureAuth = to.matched.some((record) => record.meta.auth);
+  const currentUser = auth.currentUser;
+
+  if (reqiureAuth && !currentUser) {
+    next('/');
+  } else if (!reqiureAuth && currentUser) {
+    next('/menu');
+  } else {
+    next();
+  }
+});
+
 export default router;
