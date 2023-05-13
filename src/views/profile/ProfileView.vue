@@ -5,7 +5,7 @@
         <use xlink:href="/img/icons/sprite.svg#arrow-back"></use>
       </svg>
     </router-link>
-    <h1 class="-mt-8 text-3xl text-white font-bold">Павлов Павел Павлович</h1>
+    <h1 class="-mt-8 text-3xl text-white font-bold">asdfasdf</h1>
   </header>
   <div class="flex flex-col items-center -mt-24 gap-16">
     <div class="relative">
@@ -27,9 +27,9 @@
     <div class="w-full">
       <form class="flex flex-col w-full gap-8">
         <v-input
-          :title="'Кафедра'"
-          :name="'department'"
-          :value="'Информационная безопасность'"
+          :title="'Группа'"
+          :name="'group'"
+          :modelValue="group"
           :disabled="true"
         />
         <v-input
@@ -54,5 +54,17 @@ import VInput from '@/components/ui/InputComponent.vue';
 
 export default {
   components: { VInput },
+  computed: {
+    user() {
+      const { id } = this.$route.params;
+      return this.$store.getters.user.friends?.filter((friend) => friend.id === id) || {};
+    },
+    group() {
+      return this.user.group || 'asd';
+    },
+    // fullName() {
+    //   return `${this.user.lastname} ${this.user.firstname} ${this.user.middlename}`;
+    // },
+  },
 };
 </script>

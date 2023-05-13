@@ -7,9 +7,9 @@ import store from './store';
 
 let app = null;
 
-auth.onAuthStateChanged(() => {
+auth.onAuthStateChanged(async () => {
   if (!app) {
     app = createApp(App).use(store).use(router).mount('#app');
-    store.dispatch('fetchUserInfo');
+    await store.dispatch('fetchUserInfo');
   }
 });

@@ -10,18 +10,20 @@
       <img
         width="50"
         height="50"
-        :src="user.avatar"
+        :src="avatar"
         alt="title"
       >
     </div>
     <div class="flex flex-col justify-center gap-2">
-      <b
-        class="text-xl leading-[1.25rem]"
-        :class="{
+      <router-link :to="routeTo">
+        <b
+          class="text-xl leading-[1.25rem]"
+          :class="{
           'text-white': isTeacher,
           'text-black': !isTeacher,
         }"
-      >{{ name }}</b>
+        >{{ name }}</b>
+      </router-link>
       <span
         v-if="isTeacher"
         class="text-[1rem] leading-[1rem] text-white"
@@ -49,10 +51,6 @@ export default {
       id: {
         type: Number,
       },
-      fullName: {
-        type: String,
-        required: true,
-      },
       firstName: {
         type: String,
         required: true,
@@ -75,10 +73,16 @@ export default {
   },
   computed: {
     name() {
-      return `${this.user.firstName} ${this.user.lastName}`;
+      return `${this.user.firstname} ${this.user.lastname}`;
     },
     isTeacher() {
-      return this.user.job.status === 'teacher';
+      return this.user.job === 'teacher';
+    },
+    avatar() {
+      return this.user.avatar || '/img/icons/avatar-girl.svg';
+    },
+    routeTo() {
+      return `/profile/${this.user.id}`;
     },
   },
 };

@@ -1,6 +1,14 @@
 /* eslint-disable */
 import { firebaseApp } from "@/utils/firebase";
-import { getDatabase, ref, set, onValue } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  set,
+  onValue,
+  query,
+  orderByChild,
+  equalTo
+} from "firebase/database";
 
 const database = getDatabase(firebaseApp);
 
@@ -8,9 +16,15 @@ export default {
   state: {
     user: {
       data: null,
+      friends: null,
     },
   },
   actions: {
+    init({ dispatch }) {
+      return Promise.all([
+        dispatch('fetchUserInfo'),
+      ]);
+    },
     async updateInfo({ dispatch, commit }, data) {
       const params = {};
       Object.keys(data).forEach((key) => {
@@ -35,35 +49,52 @@ export default {
             data[key] && (params[key] = data[key]);
           });
           commit('setUser', params);
+          dispatch('fetchFriends');
         } else {
           commit('setUser', null);
         }
       });
     },
-    async fetchFriends({ dispatch, commit }) {
-      const group = 
-      const db = getDatabase();
-      const ref = db.ref('users').orderByChild('group').equalTo()
-      onValue(info, (snapshot) => {
+    async fetchFriends({ dispatch, commit, getters }) {
+      const group = getters.user.data.group;
+      const friendsQuery = query(
+        ref(database, 'users'),
+        orderByChild('info/group'),
+        equalTo(group),
+      );
+      onValue(friendsQuery, (snapshot) => {
         const data = snapshot.val();
         if (data) {
-          const params = {};
-          Object.keys(data).forEach((key) => {
-            data[key] && (params[key] = data[key]);
+          const friends = [];
+          Object.keys(data).forEach((id) => {
+            friends.push({
+              id,
+              ...data[id].info
+            })
           });
-          commit('setUser', params);
+          commit('setFriends', friends);
         } else {
-          commit('setUser', null);
+          // commit('setUser', null);
         }
       });
     },
   },
   getters: {
     user: (state) => state.user,
+    friend: (state) => {
+      return (id) => {
+        return state.user.friends.filter((friend) => {
+          return friend.id === id;
+        });
+      };
+    },
   },
   mutations: {
     setUser(state, data) {
       state.user.data = data;
+    },
+    setFriends(state, data) {
+      state.user.friends = data;
     },
   },
 };

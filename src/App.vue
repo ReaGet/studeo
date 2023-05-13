@@ -26,14 +26,5 @@ export default {
       return `${this.$route.meta.layout || 'empty'}-layout`;
     },
   },
-  mounted() {
-    // console.log(this.$store.getters.user.data);
-    // if (!this.$store.getters.user.data) {
-    //   this.$store.dispatch('fetchUserInfo');
-    // }
-    // // auth.onAuthStateChanged((user) => {
-    // //   this.$store.dispatch('fetchUser', user);
-    // // });
-  },
 };
 </script>

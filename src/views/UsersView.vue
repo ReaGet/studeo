@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col pb-6 gap-6">
     <FriendComponent
-      v-for="friend of friendList"
+      v-for="friend of friends"
       :key="friend.id"
       :user="friend"
     ></FriendComponent>
@@ -16,32 +16,37 @@ export default {
     FriendComponent,
   },
   data: () => ({
-    friendList: [
-      {
-        id: 1,
-        fullName: 'Романов Игорь Александрович',
-        firstName: 'Игорь',
-        middleName: 'Александрович',
-        lastName: 'Романов',
-        avatar: '/img/images/avatar-anime.png',
-        job: {
-          status: 'teachers',
-          title: 'Кафедра Математики',
-        },
-      },
-      {
-        id: 2,
-        fullName: 'Романов Игорь Александрович',
-        firstName: 'Игорь',
-        middleName: 'Александрович',
-        lastName: 'Романов',
-        avatar: '/img/images/avatar-anime.png',
-        job: {
-          status: 'teachers',
-          title: 'Кафедра Математики',
-        },
-      },
-    ],
+    // friendList: [
+    //   {
+    //     id: 1,
+    //     fullName: 'Романов Игорь Александрович',
+    //     firstName: 'Игорь',
+    //     middleName: 'Александрович',
+    //     lastName: 'Романов',
+    //     avatar: '/img/images/avatar-anime.png',
+    //     job: {
+    //       status: 'teachers',
+    //       title: 'Кафедра Математики',
+    //     },
+    //   },
+    //   {
+    //     id: 2,
+    //     fullName: 'Романов Игорь Александрович',
+    //     firstName: 'Игорь',
+    //     middleName: 'Александрович',
+    //     lastName: 'Романов',
+    //     avatar: '/img/images/avatar-anime.png',
+    //     job: {
+    //       status: 'teachers',
+    //       title: 'Кафедра Математики',
+    //     },
+    //   },
+    // ],
   }),
+  computed: {
+    friends() {
+      return this.$store.getters.user.friends || {};
+    },
+  },
 };
 </script>
