@@ -23,6 +23,7 @@
         </select>
       </label>
       <v-input v-if="job === 'student'" :name="'group'" :title="'Группа'" v-model="group" />
+      <v-input v-else :name="'subject'" :title="'Предмет'" v-model="subject" />
       <v-input :name="'email'" :title="'Email'" v-model="email" />
       <v-input
         :name="'password'"
@@ -58,6 +59,7 @@ export default {
     middlename: '',
     birth: '',
     group: '',
+    subject: '',
     email: '',
     job: 'default',
     password: '',
@@ -75,7 +77,8 @@ export default {
         lastname: this.lastname,
         middlename: this.middlename,
         birth: this.birth,
-        group: this.group,
+        group: +this.group,
+        subject: this.subject,
         email: this.email,
         password: this.password,
         job: this.job,

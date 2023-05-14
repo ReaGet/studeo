@@ -1,20 +1,18 @@
 /* eslint-disable */
-import { firebaseApp, auth } from "@/utils/firebase";
+import { auth, database } from "@/utils/firebase";
 import {
   signInWithEmailAndPassword,
   signOut,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { getDatabase, ref, set } from "firebase/database";
-
-const database = getDatabase(firebaseApp);
+import { ref, set } from "firebase/database";
 
 export default {
   actions: {
     async login({ dispatch, commit }, { email, password }) {
       try {
-        await signInWithEmailAndPassword(auth, email, password);
-        dispatch('fetchUserInfo');
+        const { user } = await signInWithEmailAndPassword(auth, email, password);
+        dispatch('fetchInfo');
       } catch (error) {
         throw error;
       }
@@ -34,7 +32,7 @@ export default {
         await createUserWithEmailAndPassword(auth, data.email, data.password);
         const uid = await dispatch('getUid');
         await set(ref(database, `/users/${uid}/info`), params);
-        dispatch('fetchUserInfo');
+        dispatch('fetchInfo');
       } catch (error) {
         throw error;
       }

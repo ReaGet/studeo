@@ -9,7 +9,8 @@ let app = null;
 
 auth.onAuthStateChanged(async () => {
   if (!app) {
-    app = createApp(App).use(store).use(router).mount('#app');
-    await store.dispatch('fetchUserInfo');
+    store.dispatch('fetchInfo', () => {
+      app = createApp(App).use(store).use(router).mount('#app');
+    });
   }
 });

@@ -134,14 +134,14 @@ const routes = [
   {
     path: '/teachers',
     name: 'teachers',
-    meta: { layout: 'main', title: 'Преподаватели', auth: true },
-    component: () => import('@/views/UsersView.vue'),
+    meta: { layout: 'main', title: 'Преподаватели', auth: true, job: 'teacher' },
+    component: () => import('@/views/TeachersView.vue'),
   },
   {
     path: '/friends',
     name: 'friends',
-    meta: { layout: 'main', title: 'Друзья', auth: true },
-    component: () => import('@/views/UsersView.vue'),
+    meta: { layout: 'main', title: 'Друзья', auth: true, job: 'student' },
+    component: () => import('@/views/FriendsView.vue'),
   },
   {
     path: '/chat',

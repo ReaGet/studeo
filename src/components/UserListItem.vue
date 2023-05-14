@@ -27,7 +27,7 @@
       <span
         v-if="isTeacher"
         class="text-[1rem] leading-[1rem] text-white"
-      >{{ user.job.title }}</span>
+      >{{ user.subject }}</span>
     </div>
     <button class="ml-auto">
       <svg
@@ -67,6 +67,9 @@ export default {
         type: String,
       },
       job: {
+        type: String,
+      },
+      subject: {
         type: Object,
       },
     },

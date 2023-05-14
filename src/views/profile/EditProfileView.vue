@@ -23,7 +23,7 @@
         <v-input :title="'Имя'" :name="'firstname'" v-model="user.firstname" />
         <v-input :title="'Отчество'" :name="'middlename'" v-model="user.middlename" />
         <v-input :title="'Дата рождения'" :name="'birth'" v-model="user.birth" />
-        <v-input v-if="user.job === 'student'" :title="'Группа'" :name="'group'" v-model="user.group" /> 
+        <v-input v-if="user.job === 'student'" :title="'Группа'" :name="'group'" v-model="user.group" />
         <button
           class="px-4 py-6 mt-14 text-2xl text-white bg-primary-default rounded-lg outline-none"
         >Сохранить</button>
@@ -69,7 +69,7 @@ export default {
   },
   computed: {
     userData() {
-      return this.$store.getters.user?.data || {};
+      return this.$store.getters.user || {};
     },
   },
   watch: {
