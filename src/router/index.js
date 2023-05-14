@@ -70,6 +70,7 @@ const routes = [
       title: 'Новости',
       action: 'add',
       auth: true,
+      category: 'news',
     },
     component: () => import('@/views/post/PostsPageView.vue'),
   },
@@ -78,12 +79,6 @@ const routes = [
     name: 'singleNews',
     meta: { layout: 'main', auth: true },
     component: () => import('@/views/post/SinglePostView.vue'),
-  },
-  {
-    path: '/news/create',
-    name: 'newsCreate',
-    meta: { layout: 'main', title: 'Новость', auth: true },
-    component: () => import('@/views/post/PostCreateView.vue'),
   },
   {
     path: '/forum',
@@ -116,6 +111,7 @@ const routes = [
       title: 'Психологическая поддержка',
       action: 'add',
       auth: true,
+      category: 'support',
     },
     component: () => import('@/views/post/PostsPageView.vue'),
   },

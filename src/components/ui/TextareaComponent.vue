@@ -8,7 +8,7 @@
       cols="30"
       :rows="rows"
       ref="textarea"
-      v-model.trim="text"
+      :value="modelValue"
       :placeholder="placeholder"
     ></textarea>
   </label>
@@ -18,12 +18,12 @@
 export default {
   name: 'v-textarea',
   props: {
+    modelValue: {
+      default: '',
+    },
     name: {
       required: true,
       type: String,
-    },
-    value: {
-      default: '',
     },
     title: {
       default: '',
@@ -43,11 +43,6 @@ export default {
       default: 170,
     },
   },
-  data() {
-    return {
-      text: this.value,
-    };
-  },
   mounted() {
     if (this.$refs.textarea) {
       this.$refs.textarea.focus();
@@ -55,9 +50,9 @@ export default {
     }
   },
   methods: {
-    handleInput() {
+    handleInput(event) {
       this.handleTextAreaSize();
-      this.$emit('input', this.text);
+      this.$emit('update:modelValue', event.target.value.trim());
     },
     handleTextAreaSize() {
       this.$refs.textarea.style.height = '0px';
@@ -67,8 +62,9 @@ export default {
     handleEnter(event) {
       if (event.ctrlKey) {
         event.preventDefault();
-        this.$emit('submit', this.text);
-        this.text = '';
+        this.$emit('submit', this.modelValue);
+        this.$refs.textarea.value = '';
+        // this.modelValue = '';
         return;
       }
       if (!event.ctrlKey && !event.shiftKey) {

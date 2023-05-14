@@ -20,7 +20,7 @@
           </svg>
           <span class="text-[1rem] text-primary-default">{{ post.date }}</span>
         </div>
-        <router-link to="/support/32">
+        <router-link :to="link">
           <div class="flex items-center gap-3">
             <span class="text-[1rem] text-primary-default">Читать далее</span>
             <svg class="stroke-primary-default rotate-180" width="17" height="10">
@@ -37,7 +37,15 @@
 export default {
   props: {
     post: {
+      id: {
+        required: true,
+        type: String,
+      },
       title: {
+        required: true,
+        type: String,
+      },
+      category: {
         required: true,
         type: String,
       },
@@ -53,6 +61,11 @@ export default {
       img: {
         type: String,
       },
+    },
+  },
+  computed: {
+    link() {
+      return `/${this.post.category}/${this.post.id}/`;
     },
   },
 };

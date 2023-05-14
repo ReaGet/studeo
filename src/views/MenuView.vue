@@ -68,6 +68,11 @@ export default {
           name: 'forum',
           link: '/forum',
         },
+        {
+          title: 'Статьи',
+          name: 'news',
+          link: '/news',
+        },
       ],
       [
         {
