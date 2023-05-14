@@ -65,7 +65,7 @@ export default {
   },
   computed: {
     link() {
-      return `/${this.post.category}/${this.post.id}/`;
+      return `/post/${this.post.id}`;
     },
   },
 };

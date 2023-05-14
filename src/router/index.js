@@ -75,8 +75,8 @@ const routes = [
     component: () => import('@/views/post/PostsPageView.vue'),
   },
   {
-    path: '/news/:id',
-    name: 'singleNews',
+    path: '/post/:id',
+    name: 'post',
     meta: { layout: 'main', auth: true },
     component: () => import('@/views/post/SinglePostView.vue'),
   },
@@ -114,12 +114,6 @@ const routes = [
       category: 'support',
     },
     component: () => import('@/views/post/PostsPageView.vue'),
-  },
-  {
-    path: '/support/:id',
-    name: 'singleSupport',
-    meta: { layout: 'main', auth: true },
-    component: () => import('@/views/post/SinglePostView.vue'),
   },
   {
     path: '/post/create',
