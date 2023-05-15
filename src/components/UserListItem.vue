@@ -8,6 +8,7 @@
   >
     <div class="h-20 w-20 overflow-hidden rounded-xl">
       <img
+        class="h-full w-full object-cover"
         width="50"
         height="50"
         :src="avatar"

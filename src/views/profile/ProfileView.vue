@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 <template>
   <header class="relative flex items-center justify-center h-64 -mx-6 bg-primary-default">
     <button
@@ -12,11 +13,13 @@
   </header>
   <div class="flex flex-col items-center -mt-24 gap-16">
     <div class="relative">
-      <div class="border-2 border-primary-100 overflow-hidden rounded-md">
+      <div class="h-[100px] w-[100px] border-2 border-primary-100 bg-primary overflow-hidden rounded-md">
         <img
+          v-if="user.avatar"
+          class="h-full w-full object-cover"
           width="100"
           height="100"
-          src="/img/images/avatar-anime.png"
+          :src="user.avatar"
           alt="аватар"
         >
       </div>
@@ -64,6 +67,7 @@ export default {
       job: '',
       group: '',
       subject: '',
+      avatar: '',
     },
   }),
   computed: {

@@ -2,20 +2,33 @@
 <template>
   <div class="flex flex-col items-center pb-6 gap-16">
     <div class="relative">
-      <div class="border-2 border-primary-100 overflow-hidden rounded-md">
+      <div class="w-[100px] h-[100px] border-2 border-primary-100 bg-primary-default overflow-hidden rounded-md">
         <img
+          v-if="avatarImage"
+          class="h-full w-full object-cover"
           width="100"
           height="100"
-          src="/img/images/avatar-anime.png"
+          :src="avatarImage"
           alt="аватар"
         >
       </div>
       <!-- eslint-disable-next-line max-len -->
-      <button class="absolute flex items-center justify-center w-16 h-16 -bottom-4 -right-4 border-2 border-white bg-gray-100 rounded-md bg-gray-light shadow-md">
+      <label
+        class="absolute flex items-center justify-center w-16 h-16 -bottom-4 -right-4 border-2 border-white bg-gray-100 rounded-md bg-gray-light shadow-md"
+        for="image"
+      >
+        <input
+          class="h-0 w-0 invisible"
+          type="file"
+          name="image"
+          id="image"
+          @change="handleImage"
+          accept="image/*"
+        >
         <svg width="25" height="25">
           <use xlink:href="/img/icons/sprite.svg#camera"></use>
         </svg>
-      </button>
+      </label>
     </div>
     <div class="w-full">
       <form class="flex flex-col w-full gap-8" @submit.prevent="handleSubmit">
@@ -37,6 +50,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import VInput from '@/components/ui/InputComponent.vue';
 
 export default {
@@ -50,7 +64,9 @@ export default {
         birth: '',
         job: '',
         group: '',
+        avatar: null,
       },
+      preview: '',
     };
   },
   methods: {
@@ -61,6 +77,11 @@ export default {
       this.$store.dispatch('logout');
       this.$router.push('/');
     },
+    handleImage(event) {
+      this.user.avatar = event.target.files[0];
+      console.log(this.user.avatar);
+      this.preview = URL.createObjectURL(this.user.avatar);
+    },
   },
   mounted() {
     if (this.userData) {
@@ -70,6 +91,10 @@ export default {
   computed: {
     userData() {
       return this.$store.getters.user || {};
+    },
+    avatarImage() {
+      const isString = typeof this.user.avatar === 'string';
+      return isString ? this.user.avatar : this.preview;
     },
   },
   watch: {

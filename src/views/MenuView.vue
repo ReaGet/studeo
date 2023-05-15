@@ -2,9 +2,13 @@
   <div class="flex flex-col pb-6">
     <div class="flex items-center py-6 gap-6 border-b border-gray-light">
       <div class="w-[7rem] h-[7rem] rounded-lg bg-primary-light">
-        <svg width="80" height="80" class="-mt-[1rem]">
-          <use xlink:href="/img/icons/sprite.svg#avatar-girl"></use>
-        </svg>
+        <img
+          class="h-full w-full object-cover"
+          width="80"
+          height="80"
+          :src="avatar"
+          alt="avatar"
+        >
       </div>
       <span class="text-3xl text-black font-bold">Привет, {{ name }}!</span>
     </div>
@@ -92,6 +96,9 @@ export default {
     name() {
       const name = this.$store.getters.user?.firstname;
       return name || 'User';
+    },
+    avatar() {
+      return this.$store.getters.user.avatar || '/img/icons/avatar-girl.svg';
     },
   },
 };
