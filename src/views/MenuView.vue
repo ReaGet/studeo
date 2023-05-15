@@ -89,6 +89,11 @@ export default {
           name: 'teachers',
           link: '/teachers',
         },
+        {
+          title: 'Создание студентов',
+          name: 'friends',
+          link: '/students/create',
+        },
       ],
     ],
   }),

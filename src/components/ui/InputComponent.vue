@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     handleInput(event) {
-      this.$emit('update:modelValue', event.target.value.trim());
+      this.$emit('update:modelValue', event.target.value);
     },
   },
 };

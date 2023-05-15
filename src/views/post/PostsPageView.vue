@@ -65,6 +65,7 @@ export default {
               description: post.description,
               category: post.category,
               date: this.formatDate(post.date),
+              image: post.image,
             });
           });
           this.posts = posts;

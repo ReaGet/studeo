@@ -1,9 +1,9 @@
 <template>
   <article class="flex flex-col overflow-hidden rounded-xl bg-primary-100 gap-6">
     <img
-      v-if="post.img"
+      v-if="post.image"
       class="-mb-6"
-      :src="post.img"
+      :src="post.image"
       :alt="post.title"
     >
     <div class="flex flex-col py-6 px-4 gap-6">
@@ -58,7 +58,7 @@ export default {
         type: String,
         default: 'dd.mm.yyy',
       },
-      img: {
+      image: {
         type: String,
       },
     },

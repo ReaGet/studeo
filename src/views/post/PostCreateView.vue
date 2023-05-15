@@ -16,7 +16,7 @@
         </select>
       </label>
       <v-textarea name="description" :placeholder="'Описание'" v-model="description" />
-      <v-file title="Выберите обложку" name="file"></v-file>
+      <v-file :title="fileInputTitle" name="file" @changeFile="handleImage"></v-file>
       <button
         class="px-4 py-6 mt-14 text-2xl text-white bg-primary-default rounded-lg outline-none"
       >Создать</button>
@@ -25,9 +25,11 @@
 </template>
 
 <script>
+/* eslint-disable */
 import VInput from '@/components/ui/InputComponent.vue';
 import VTextarea from '@/components/ui/TextareaComponent.vue';
 import VFile from '@/components/ui/FileSelectComponent.vue';
+import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { database } from '@/utils/firebase';
 import {
   ref,
@@ -44,6 +46,8 @@ export default {
     title: '',
     category: 'default',
     description: '',
+    image: null,
+    fileInputTitle: 'Выберите обложку',
   }),
   methods: {
     createPost() {
@@ -53,11 +57,37 @@ export default {
         category: this.category,
         date: new Date().toJSON(),
       };
+      const storage = getStorage();
+      if (!this.image) {
+        this.fetchPostCreate(formData);
+        return;
+      }
+      const imageRef = storageRef(storage, `images/${this.image.name}`);
+      const uploadTask = uploadBytesResumable(imageRef, this.image);
+      uploadTask.on('state_changed',
+        (snapshot) => {},
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            formData.image = downloadURL;
+            this.fetchPostCreate(formData);
+          });
+        }
+      );
+    },
+    fetchPostCreate(formData) {
       push(ref(database, '/posts/'), formData).then(() => {
         this.title = '';
         this.description = '';
         this.category = 'default';
+        this.fileInputTitle = 'Выберите обложку';
       });
+    },
+    handleImage(image) {
+      this.image = image;
+      this.fileInputTitle = image.name;
     },
   },
 };

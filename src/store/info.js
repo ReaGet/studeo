@@ -4,10 +4,6 @@ import {
   ref,
   set,
   onValue,
-  query,
-  orderByChild,
-  equalTo,
-  push,
 } from "firebase/database";
 import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 

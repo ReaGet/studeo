@@ -24,9 +24,7 @@ export default {
     async register({ dispatch, commit }, data) {
       const params = {};
       Object.keys(data).forEach((key) => {
-        if (key !== 'password') {
-          data[key] && (params[key] = data[key]);
-        }
+        data[key] && (params[key] = data[key]);
       });
       try {
         await createUserWithEmailAndPassword(auth, data.email, data.password);

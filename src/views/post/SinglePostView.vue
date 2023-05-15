@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-col gap-6">
     <img
-      v-if="post.img"
+      v-if="post.image"
       class="-mb-6 rounded-t-xl"
-      src="/img/images/post-image.jpg"
+      :src="post.image"
       alt="title"
     >
     <div class="flex flex-col py-6 px-4 gap-6">
@@ -38,6 +38,7 @@ export default {
       description: '',
       date: '',
       category: '',
+      image: '',
     },
   }),
   mounted() {
@@ -54,6 +55,7 @@ export default {
             title: post.title,
             description: post.description,
             date: this.formatDate(post.date),
+            image: post.image,
           };
         }
       });

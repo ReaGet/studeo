@@ -157,6 +157,12 @@ const routes = [
     meta: { layout: 'main', title: 'Успеваемость', auth: true },
     component: () => import('@/views/DiaryView.vue'),
   },
+  {
+    path: '/students/create',
+    name: 'studentsCreate',
+    meta: { layout: 'main', title: 'Создание студента', auth: true, job: 'teacher' },
+    component: () => import('@/views/StudentsCreateView.vue'),
+  },
 ];
 
 const router = createRouter({

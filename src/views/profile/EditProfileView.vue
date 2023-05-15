@@ -79,7 +79,6 @@ export default {
     },
     handleImage(event) {
       this.user.avatar = event.target.files[0];
-      console.log(this.user.avatar);
       this.preview = URL.createObjectURL(this.user.avatar);
     },
   },
