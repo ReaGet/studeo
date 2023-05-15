@@ -3,7 +3,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
 
-const firebaseApp = initializeApp({
+const config = {
   apiKey: 'AIzaSyCYs3REfSoqual_OtfwU816FAuHCOLlQNM',
   authDomain: 'studeo-8a254.firebaseapp.com',
   projectId: 'studeo-8a254',
@@ -12,9 +12,12 @@ const firebaseApp = initializeApp({
   appId: '1:930405552835:web:5f011727b1a866be408876',
   databaseURL:
     'https://studeo-8a254-default-rtdb.europe-west1.firebasedatabase.app/',
-});
+};
+const firebaseApp = initializeApp(config);
+const secondFirebaseApp = initializeApp(config, 'secondary');
 
 const auth = getAuth(firebaseApp);
+const secondAuth = getAuth(secondFirebaseApp);
 const database = getDatabase(firebaseApp);
 
-export { firebaseApp, auth, database };
+export { firebaseApp, auth, database, secondAuth };

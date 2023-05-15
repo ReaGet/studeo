@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 <template>
   <div class="flex flex-col pb-6">
     <div class="flex items-center py-6 gap-6 border-b border-gray-light">
@@ -15,7 +16,10 @@
     <div class="flex flex-col divide-y divide-gray-light">
       <nav v-for="(menu, i) in menuItems" :key="i" >
         <ul class="flex flex-col py-8 gap-6">
-          <li v-for="item in menu" :key="item.name">
+          <li
+            v-for="item in menu"
+            :key="item.name"
+          >
             <router-link class="flex items-center gap-8" :to="item.link">
               <div
                 class="flex items-center justify-center h-20 w-20 bg-gray-200 rounded-lg shadow-sm"
@@ -89,21 +93,27 @@ export default {
           name: 'teachers',
           link: '/teachers',
         },
-        {
-          title: 'Создание студентов',
-          name: 'friends',
-          link: '/students/create',
-        },
       ],
     ],
   }),
+  mounted() {
+    const { job } = this.$store.getters.user;
+    if (job !== 'teacher') {
+      return;
+    }
+    this.menuItems[1].push({
+      title: 'Создание студентов',
+      name: 'friends',
+      link: '/students/create',
+    });
+  },
   computed: {
     name() {
       const name = this.$store.getters.user?.firstname;
       return name || 'User';
     },
     avatar() {
-      return this.$store.getters.user.avatar || '/img/icons/avatar-girl.svg';
+      return this.$store.getters.user?.avatar || '/img/icons/avatar-girl.svg';
     },
   },
 };

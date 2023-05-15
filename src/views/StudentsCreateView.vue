@@ -22,8 +22,8 @@
 <script>
 /* eslint-disable */
 import VInput from '@/components/ui/InputComponent.vue';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, database } from '@/utils/firebase';
+import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
+import { auth, database, secondAuth } from '@/utils/firebase';
 import { ref, set } from 'firebase/database';
 
 function generatePassword() {
@@ -62,9 +62,10 @@ export default {
       };
       try {
         try {
-          const response = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+          const response = await createUserWithEmailAndPassword(secondAuth, formData.email, formData.password);
           const uid = response.user.uid;
           await set(ref(database, `/users/${uid}/info`), formData);
+          await signOut(secondAuth);
           alert('Студент создан!');
           this.firstname = '';
           this.lastname = '';
