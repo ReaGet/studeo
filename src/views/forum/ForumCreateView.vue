@@ -41,6 +41,8 @@ export default {
       title: this.title,
       description: this.description,
       date: new Date().toJSON(),
+      answers: [],
+      answersCount: 0,
       user: {
         firstname,
         uid,

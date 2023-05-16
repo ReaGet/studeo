@@ -22,7 +22,7 @@
           <svg width="15" height="15">
             <use xlink:href="/img/icons/sprite.svg#comment"></use>
           </svg>
-          <span class="text-[1rem] text-primary-default">{{ answers }} ответов</span>
+          <span class="text-[1rem] text-primary-default">{{ question.answersCount }} ответов</span>
         </div>
       </div>
     </div>
@@ -46,7 +46,7 @@ export default {
         type: String,
         default: 'dd.mm.yyy',
       },
-      answers: {
+      answersCount: {
         type: Number,
         default: 0,
       },

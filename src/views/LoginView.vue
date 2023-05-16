@@ -48,7 +48,9 @@ export default {
 
       try {
         await this.$store.dispatch('login', formData);
-        this.$router.push('/menu');
+        setTimeout(() => {
+          this.$router.push('/menu');
+        }, 300);
       } catch (error) {
         console.log(error);
       }

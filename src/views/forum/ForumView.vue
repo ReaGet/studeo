@@ -58,6 +58,7 @@ export default {
               description: question.description,
               date: this.formatDate(question.date),
               user: question.user,
+              answersCount: question.answersCount,
             });
           });
           this.questions = questions;

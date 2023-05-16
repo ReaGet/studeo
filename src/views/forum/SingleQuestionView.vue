@@ -14,7 +14,7 @@
     </div>
     <div class="h-[1px] w-full bg-gray-200"></div>
     <div class="flex items-center justify-between">
-      <h2 class="text-2xl text-black font-bold">Ответов (10)</h2>
+      <h2 class="text-2xl text-black font-bold">Ответов ({{ question.answersCount }})</h2>
       <button
         class="flex items-center gap-2 outline-none"
         @click="isCreatingComment = !isCreatingComment"
@@ -37,24 +37,31 @@
         </svg>
       </button>
     </div>
-    <form class="flex flex-col mb-6" v-if="isCreatingComment">
-      <v-textarea name="answer" :placeholder="'Введите ответ'"></v-textarea>
+    <form class="flex flex-col mb-6" v-if="isCreatingComment" @submit.prevent="sendAnswer">
+      <v-textarea name="answer" :placeholder="'Введите ответ'" v-model="answer"></v-textarea>
       <button
         class="px-4 py-6 mt-8 text-2xl text-white bg-primary-default rounded-lg outline-none"
       >Отправить</button>
     </form>
     <div class="flex flex-col gap-8">
-      <CommentComponent v-for="i in 3" :key="i"></CommentComponent>
+      <CommentComponent
+        v-for="answer in question.answers"
+        :key="answer.id"
+        :answer="answer"
+      ></CommentComponent>
     </div>
   </div>
 </template>
 
 <script>
+/* eslint-disable */
 import CommentComponent from '@/components/CommentListItem.vue';
 import VTextarea from '@/components/ui/TextareaComponent.vue';
 import {
   onValue,
+  push,
   ref,
+  set,
 } from 'firebase/database';
 import { database } from '@/utils/firebase';
 
@@ -65,7 +72,9 @@ export default {
   },
   data: () => ({
     isCreatingComment: false,
+    answer: '',
     question: {
+      answersCount: 0,
       title: '',
       description: '',
       date: '',
@@ -88,10 +97,39 @@ export default {
             description: data.description,
             date: this.formatDate(data.date),
             user: data.user,
-            answers: data.answers,
+            answersCount: data.answersCount || 0,
+            answers: this.convertAnswers(data.answers),
           };
         }
       });
+    },
+    convertAnswers(answers) {
+      if (!answers) {
+        return [];
+      }
+      return Object.keys(answers).map((key) => {
+        return {
+          id: key,
+          text: answers[key].text,
+          name: answers[key].name,
+          date: this.formatDate(answers[key].date),
+          avatar: answers[key].avatar || '/img/icons/avatar-girl.svg',
+        };
+      });
+    },
+    sendAnswer() {
+      const { id } = this.$route.params;
+      const { firstname, lastname, avatar } = this.$store.getters.user;
+      const formData = {
+        text: this.answer,
+        name: `${firstname} ${lastname}`,
+        date: new Date().toJSON(),
+        avatar: avatar || '',
+      };
+      push(ref(database, `/forum/${id}/answers`), formData).then(() => {
+        this.answer = '';
+      });
+      set(ref(database, `/forum/${id}/answersCount`), this.question.answers.length);
     },
   },
 };
