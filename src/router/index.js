@@ -163,6 +163,30 @@ const routes = [
     meta: { layout: 'main', title: 'Создание студента', auth: true, job: 'teacher' },
     component: () => import('@/views/StudentsCreateView.vue'),
   },
+  {
+    path: '/groups',
+    name: 'groups',
+    meta: {
+      layout: 'main',
+      title: 'Группы',
+      auth: true,
+      job: 'teacher',
+      action: 'add',
+    },
+    component: () => import('@/views/group/GroupListView.vue'),
+  },
+  {
+    path: '/groups/create',
+    name: 'groupCreate',
+    meta: { layout: 'main', title: 'Создание группы', auth: true, job: 'teacher' },
+    component: () => import('@/views/group/GroupCreateView.vue'),
+  },
+  {
+    path: '/group/:group',
+    name: 'groupView',
+    meta: { layout: 'main', title: 'Список группы', auth: true, job: 'teacher' },
+    component: () => import('@/views/group/SingleGroupView.vue'),
+  },
 ];
 
 const router = createRouter({

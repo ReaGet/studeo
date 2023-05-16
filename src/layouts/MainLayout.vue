@@ -30,7 +30,14 @@ export default {
     },
     routeLink() {
       const { name } = this.$route;
-      return name === 'forum' ? '/forum/create' : '/post/create';
+      switch (name) {
+        case 'forum':
+          return '/forum/create';
+        case 'groups':
+          return '/groups/create';
+        default:
+          return '/post/create';
+      }
     },
   },
 };

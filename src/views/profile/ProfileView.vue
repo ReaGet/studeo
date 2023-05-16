@@ -9,11 +9,11 @@
         <use xlink:href="/img/icons/sprite.svg#arrow-back"></use>
       </svg>
     </button>
-    <h1 class="-mt-8 text-3xl text-white font-bold">{{ fullname }}</h1>
+    <h1 class="-mt-8 _text-3xl text-2xl text-white font-bold">{{ fullname }}</h1>
   </header>
   <div class="flex flex-col items-center -mt-24 gap-16">
     <div class="relative">
-      <div class="h-[100px] w-[100px] border-2 border-primary-100 bg-primary overflow-hidden rounded-md">
+      <div class="h-[100px] w-[100px] border-2 border-primary-100 bg-primary-default overflow-hidden rounded-md">
         <img
           v-if="user.avatar"
           class="h-full w-full object-cover"

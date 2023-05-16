@@ -22,8 +22,23 @@
           <option value="student">Студент</option>
         </select>
       </label>
-      <v-input v-if="job === 'student'" :name="'group'" :title="'Группа'" v-model="group" />
-      <v-input v-else :name="'subject'" :title="'Предмет'" v-model="subject" />
+      <label v-if="job === 'student'" for="group" class="flex flex-col justify-start">
+        <span class="text-2xl text-gray-default mb-2">Группа</span>
+        <select
+          id="group"
+          class="h-[52px] indent-4 px-4 py-6 text-2xl text-black bg-primary-light rounded-lg outline-none"
+          name="group"
+          v-model="group"
+        >
+          <option value="default" selected="selected">Выберите группу</option>
+          <option
+            v-for="item in groups"
+            :key="item.group"
+            :value="item.group"
+          >{{ item.group }} - {{ item.subject }}</option>
+        </select>
+      </label>
+      <v-input v-else :name="'subject'" :title="'Предмет'" v-model="subject"/>
       <v-input :name="'email'" :title="'Email'" v-model="email" />
       <v-input
         :name="'password'"
@@ -49,11 +64,15 @@
 </template>
 
 <script>
+/* eslint-disable */
 import VInput from '@/components/ui/InputComponent.vue';
+import { onValue, ref } from 'firebase/database';
+import { database } from '@/utils/firebase';
 
 export default {
   components: { VInput },
   data: () => ({
+    groups: [],
     firstname: '',
     lastname: '',
     middlename: '',
@@ -65,7 +84,31 @@ export default {
     password: '',
     password_verify: '',
   }),
+  mounted() {
+    this.fetchGroups();
+  },
   methods: {
+    fetchGroups() {
+      const dataQuery = ref(database, 'groups');
+      onValue(dataQuery, async (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          this.groups = this.convertData(data);
+        }
+      });
+    },
+    convertData(data) {
+      if (!data) {
+        return [];
+      }
+      return Object.keys(data).map((key) => {
+        return {
+          id: key,
+          group: data[key].group,
+          subject: data[key].subject,
+        };
+      });
+    },
     async handleSubmit() {
       if (this.password !== this.password_verify
         || this.job === 'default') {
@@ -77,7 +120,7 @@ export default {
         lastname: this.lastname,
         middlename: this.middlename,
         birth: this.birth,
-        group: +this.group,
+        group: this.group,
         subject: this.subject,
         email: this.email,
         password: this.password,

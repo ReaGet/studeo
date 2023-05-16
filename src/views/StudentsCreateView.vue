@@ -10,7 +10,22 @@
       <v-input :name="'middlename'" :title="'Отчество'" v-model="middlename" />
       <v-input :name="'birth'" :title="'Дата рождения'" :placeholder="'dd.mm.yyyy'" v-model="birth" />
       <v-input :name="'birth'" :title="'Должность'" :disabled="'disabled'" :modelValue="'Студент'" />
-      <v-input :name="'group'" :title="'Группа'" v-model="group" />
+      <label for="group" class="flex flex-col justify-start">
+        <span class="text-2xl text-gray-default mb-2">Группа</span>
+        <select
+          id="group"
+          class="h-[52px] indent-4 px-4 py-6 text-2xl text-black bg-primary-light rounded-lg outline-none"
+          name="group"
+          v-model="group"
+        >
+          <option value="default" selected="selected">Выберите группу</option>
+          <option
+            v-for="item in groups"
+            :key="item.group"
+            :value="item.group"
+          >{{ item.group }} - {{ item.subject }}</option>
+        </select>
+      </label>
       <v-input :name="'email'" :title="'Email'" v-model="email" />
       <button
         class="px-4 py-6 mt-14 text-2xl text-white bg-primary-default rounded-lg outline-none"
@@ -24,7 +39,7 @@
 import VInput from '@/components/ui/InputComponent.vue';
 import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth, database, secondAuth } from '@/utils/firebase';
-import { ref, set } from 'firebase/database';
+import { onValue, ref, set } from 'firebase/database';
 
 function generatePassword() {
   const length = 8;
@@ -39,6 +54,7 @@ function generatePassword() {
 export default {
   components: { VInput },
   data: () => ({
+    groups: [],
     firstname: '',
     lastname: '',
     middlename: '',
@@ -48,7 +64,31 @@ export default {
     job: 'student',
     password: '',
   }),
+  mounted() {
+    this.fetchGroups();
+  },
   methods: {
+    fetchGroups() {
+      const dataQuery = ref(database, 'groups');
+      onValue(dataQuery, async (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          this.groups = this.convertData(data);
+        }
+      });
+    },
+    convertData(data) {
+      if (!data) {
+        return [];
+      }
+      return Object.keys(data).map((key) => {
+        return {
+          id: key,
+          group: data[key].group,
+          subject: data[key].subject,
+        };
+      });
+    },
     async handleSubmit() {
       const formData = {
         firstname: this.firstname,
@@ -61,22 +101,18 @@ export default {
         job: this.job,
       };
       try {
-        try {
-          const response = await createUserWithEmailAndPassword(secondAuth, formData.email, formData.password);
-          const uid = response.user.uid;
-          await set(ref(database, `/users/${uid}/info`), formData);
-          await signOut(secondAuth);
-          alert('Студент создан!');
-          this.firstname = '';
-          this.lastname = '';
-          this.middlename = '';
-          this.birth = '';
-          this.group = '';
-          this.email = '';
-          this.password = '';
-        } catch (error) {
-          throw error;
-        }
+        const response = await createUserWithEmailAndPassword(secondAuth, formData.email, formData.password);
+        const uid = response.user.uid;
+        await set(ref(database, `/users/${uid}/info`), formData);
+        await signOut(secondAuth);
+        alert('Студент создан!');
+        this.firstname = '';
+        this.lastname = '';
+        this.middlename = '';
+        this.birth = '';
+        this.group = '';
+        this.email = '';
+        this.password = '';
       } catch (error) {
         console.log(error);
       }

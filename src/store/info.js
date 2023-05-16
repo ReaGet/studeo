@@ -9,8 +9,8 @@ import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } f
 
 export default {
   state: {
-    user: {
-    },
+    groups: {},
+    user: {},
   },
   actions: {
     async updateInfo({ dispatch, commit }, data) {
@@ -75,9 +75,38 @@ export default {
         } else {
           commit('setUser', null);
         }
-        callback && callback();
+        // if (data.job === 'teacher') {
+        //   dispatch('fetchTeacherGroups', callback);
+        // } else {
+          callback && callback();
+        // }
       });
     },
+    async updateGroups({ dispatch, commit }, data) {
+      try {
+        const uid = await dispatch('getUid');
+        set(ref(database, `/users/${uid}/groups`), data);
+      } catch (error) {
+        throw error;
+      }
+    },
+    async fetchTeacherGroups({ dispatch, commit }, callback) {
+      const uid = await dispatch('getUid');
+      const groups = ref(database, `users/${uid}/groups`);
+      onValue(groups, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          const params = [];
+          Object.keys(data).forEach((key) => {
+            params.push(data[key]);
+          });
+          commit('setGroups', params);
+          callback && callback();
+        } else {
+          commit('setGroups', null);
+        }
+      });
+    }
   },
   getters: {
     user: (state) => state.user,
@@ -85,6 +114,9 @@ export default {
   mutations: {
     setUser(state, data) {
       state.user = data;
+    },
+    setGroups(state, data) {
+      state.groups = data;
     },
   },
 };

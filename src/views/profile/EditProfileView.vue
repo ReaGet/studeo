@@ -37,6 +37,22 @@
         <v-input :title="'Отчество'" :name="'middlename'" v-model="user.middlename" />
         <v-input :title="'Дата рождения'" :name="'birth'" v-model="user.birth" />
         <v-input v-if="user.job === 'student'" :title="'Группа'" :name="'group'" v-model="user.group" />
+        <label v-else for="group" class="flex flex-col justify-start">
+          <span class="text-2xl text-gray-default mb-2">Группа</span>
+          <select
+            multiple
+            id="group"
+            class="min-h-[52px] indent-4 px-4 py-6 text-2xl text-black bg-primary-light rounded-lg outline-none"
+            name="group"
+            v-model="groupsSelected"
+          >
+            <option
+              v-for="item in groups"
+              :key="item.group"
+              :value="item.group"
+            >{{ item.group }} - {{ item.subject }}</option>
+          </select>
+        </label>
         <button
           class="px-4 py-6 mt-14 text-2xl text-white bg-primary-default rounded-lg outline-none"
         >Сохранить</button>
@@ -52,11 +68,15 @@
 <script>
 /* eslint-disable */
 import VInput from '@/components/ui/InputComponent.vue';
+import { onValue, ref } from 'firebase/database';
+import { database } from '@/utils/firebase';
 
 export default {
   components: { VInput },
   data() {
     return {
+      groups: [],
+      groupsSelected: [],
       user: {
         firstname: '',
         lastname: '',
@@ -69,9 +89,40 @@ export default {
       preview: '',
     };
   },
+  async mounted() {
+    if (this.userData) {
+      this.user = { ...this.userData };
+    }
+    this.fetchGroups();
+    await this.$store.dispatch('fetchTeacherGroups');
+  },
   methods: {
+    fetchGroups() {
+      const dataQuery = ref(database, 'groups');
+      onValue(dataQuery, async (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          this.groups = this.convertData(data);
+        }
+      });
+    },
+    convertData(data) {
+      if (!data) {
+        return [];
+      }
+      return Object.keys(data).map((key) => {
+        return {
+          id: key,
+          group: data[key].group,
+          subject: data[key].subject,
+        };
+      });
+    },
     handleSubmit() {
       this.$store.dispatch('updateInfo', this.user);
+      if (this.user.job === 'teacher' && Object.keys(this.groupsSelected).length) {
+        this.$store.dispatch('updateGroups', this.groupsSelected);
+      }
     },
     logout() {
       this.$store.dispatch('logout');
@@ -81,11 +132,6 @@ export default {
       this.user.avatar = event.target.files[0];
       this.preview = URL.createObjectURL(this.user.avatar);
     },
-  },
-  mounted() {
-    if (this.userData) {
-      this.user = { ...this.userData };
-    }
   },
   computed: {
     userData() {

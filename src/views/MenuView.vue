@@ -83,30 +83,34 @@ export default {
           link: '/news',
         },
       ],
-      [
-        {
-          title: 'Одногруппники',
-          name: 'friends',
-          link: '/friends',
-        },
-        {
-          title: 'Преподаватели',
-          name: 'teachers',
-          link: '/teachers',
-        },
-      ],
+      [],
     ],
   }),
   mounted() {
     const { job } = this.$store.getters.user;
-    if (job !== 'teacher') {
-      return;
+    if (job === 'teacher') {
+      this.menuItems[1].push({
+        title: 'Группы',
+        name: 'teachers',
+        link: '/groups',
+      });
+      this.menuItems[1].push({
+        title: 'Создание студентов',
+        name: 'friends',
+        link: '/students/create',
+      });
+    } else {
+      this.menuItems[1].push({
+        title: 'Одногруппники',
+        name: 'friends',
+        link: '/friends',
+      });
+      this.menuItems[1].push({
+        title: 'Преподаватели',
+        name: 'teachers',
+        link: '/teachers',
+      });
     }
-    this.menuItems[1].push({
-      title: 'Создание студентов',
-      name: 'friends',
-      link: '/students/create',
-    });
   },
   computed: {
     name() {
