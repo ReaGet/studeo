@@ -1,15 +1,15 @@
 <template>
   <div class="flex flex-col py-6 px-4 gap-6">
     <!-- eslint-disable-next-line max-len -->
-    <h1 class="text-2xl text-black font-bold">Как мне сдать все экзамены?</h1>
+    <h1 class="text-2xl text-black font-bold">{{ question.title }}</h1>
     <!-- eslint-disable-next-line max-len -->
-    <p class="text-xl text-gray-300 leading-tight">Дело в том, что у меня с преподами в основном хорошие отнощения, но некоторые меня просто валят. Как найти к ним подход?</p>
+    <p class="text-xl text-gray-300 leading-tight">{{ question.description }}</p>
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-3">
         <svg width="15" height="15">
           <use xlink:href="/img/icons/sprite.svg#date"></use>
         </svg>
-        <span class="text-[1rem] text-primary-default">26.04.2023</span>
+        <span class="text-[1rem] text-primary-default">{{ question.date }}</span>
       </div>
     </div>
     <div class="h-[1px] w-full bg-gray-200"></div>
@@ -52,14 +52,47 @@
 <script>
 import CommentComponent from '@/components/CommentListItem.vue';
 import VTextarea from '@/components/ui/TextareaComponent.vue';
+import {
+  onValue,
+  ref,
+} from 'firebase/database';
+import { database } from '@/utils/firebase';
 
 export default {
-  data: () => ({
-    isCreatingComment: false,
-  }),
   components: {
     CommentComponent,
     VTextarea,
+  },
+  data: () => ({
+    isCreatingComment: false,
+    question: {
+      title: '',
+      description: '',
+      date: '',
+      answers: [],
+      user: {},
+    },
+  }),
+  mounted() {
+    this.fetchData();
+  },
+  methods: {
+    fetchData() {
+      const { id } = this.$route.params;
+      const dataQuery = ref(database, `forum/${id}/`);
+      onValue(dataQuery, async (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          this.question = {
+            title: data.title,
+            description: data.description,
+            date: this.formatDate(data.date),
+            user: data.user,
+            answers: data.answers,
+          };
+        }
+      });
+    },
   },
 };
 </script>

@@ -42,20 +42,20 @@ export default {
     },
   }),
   mounted() {
-    this.fetchPost();
+    this.fetchData();
   },
   methods: {
-    fetchPost() {
+    fetchData() {
       const { id } = this.$route.params;
-      const postQuery = ref(database, `posts/${id}/`);
-      onValue(postQuery, async (snapshot) => {
-        const post = snapshot.val();
-        if (post) {
+      const dataQuery = ref(database, `posts/${id}/`);
+      onValue(dataQuery, async (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
           this.post = {
-            title: post.title,
-            description: post.description,
-            date: this.formatDate(post.date),
-            image: post.image,
+            title: data.title,
+            description: data.description,
+            date: this.formatDate(data.date),
+            image: data.image,
           };
         }
       });
