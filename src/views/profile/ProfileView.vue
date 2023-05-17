@@ -40,7 +40,14 @@
           :disabled="true"
         />
         <v-input
-          v-else
+          v-if="!isTeacher && user.subject"
+          :title="'Кафедра'"
+          :name="'subject'"
+          :modelValue="user.subject"
+          :disabled="true"
+        />
+        <v-input
+          v-if="isTeacher"
           :title="'Предмет'"
           :name="'subject'"
           :modelValue="user.subject"
