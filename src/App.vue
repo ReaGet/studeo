@@ -27,7 +27,6 @@ export default {
       return `${this.$route.meta.layout || 'empty'}-layout`;
     },
     loaded() {
-      console.log(this.$store.getters.loaded);
       return this.$store.getters.loaded;
     },
   },

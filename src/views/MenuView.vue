@@ -55,69 +55,67 @@
 export default {
   name: 'menu-view',
   data: () => ({
-    menuItems: [
+    menuList: [
       [
         {
           title: 'Личный кабинет',
           name: 'profile',
           link: '/profile/edit',
+          job: '',
         },
         {
           title: 'Расписание',
           name: 'schedule',
           link: '/schedule',
+          job: '',
         },
         {
           title: 'Библиотека',
           name: 'library',
           link: '/registration',
+          job: '',
         },
         {
           title: 'Форум',
           name: 'forum',
           link: '/forum',
+          job: '',
         },
         {
           title: 'Статьи',
           name: 'news',
           link: '/news',
-        },
-        {
-          title: 'asdf',
-          name: 'news',
-          link: '/news',
-          job: 'student',
+          job: '',
         },
       ],
-      [],
+      [
+        {
+          title: 'Группы',
+          name: 'teachers',
+          link: '/groups',
+          job: 'teacher',
+        },
+        {
+          title: 'Создание студентов',
+          name: 'friends',
+          link: '/students/create',
+          job: 'teacher',
+        },
+        {
+          title: 'Одногруппники',
+          name: 'friends',
+          link: '/friends',
+          job: 'student',
+        },
+        {
+          title: 'Преподаватели',
+          name: 'teachers',
+          link: '/teachers',
+          job: 'student',
+        }
+      ],
     ],
   }),
-  mounted() {
-    const { job } = this.$store.getters.user;
-    if (job === 'teacher') {
-      this.menuItems[1].push({
-        title: 'Группы',
-        name: 'teachers',
-        link: '/groups',
-      });
-      this.menuItems[1].push({
-        title: 'Создание студентов',
-        name: 'friends',
-        link: '/students/create',
-      });
-    } else {
-      this.menuItems[1].push({
-        title: 'Одногруппники',
-        name: 'friends',
-        link: '/friends',
-      });
-      this.menuItems[1].push({
-        title: 'Преподаватели',
-        name: 'teachers',
-        link: '/teachers',
-      });
-    }
-  },
   computed: {
     name() {
       const name = this.$store.getters.user?.firstname;
@@ -126,8 +124,17 @@ export default {
     avatar() {
       return this.$store.getters.user?.avatar || '/img/icons/avatar-girl.svg';
     },
-    userJob() {
-      return this.$store.getters.user?.job;
+    menuItems() {
+      const { job } = this.$store.getters.user;
+      return this.menuList.reduce((menuList, menu) => {
+        const items = menu.filter((item) => {
+          if (item.job === '' || item.job === job) {
+            return item;
+          }
+        });
+        menuList.push(items);
+        return menuList;
+      }, []);
     },
   },
 };
