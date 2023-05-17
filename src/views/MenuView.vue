@@ -19,7 +19,6 @@
           <li
             v-for="item in menu"
             :key="item.name"
-            v-if="!item.job || item?.job === userJob"
           >
             <router-link class="flex items-center gap-8" :to="item.link">
               <div

@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { database } from "@/utils/firebase";
+import { database, auth } from "@/utils/firebase";
 import {
   ref,
   set,
@@ -110,10 +110,11 @@ export default {
   },
   getters: {
     user: (state) => state.user,
+    loaded: (state) => state.user?.loaded || !auth.currentUser,
   },
   mutations: {
     setUser(state, data) {
-      state.user = data;
+      state.user = { ...data, loaded: true };
     },
     setGroups(state, data) {
       state.groups = data;

@@ -1,5 +1,6 @@
 <template>
-  <div class="flex flex-col h-screen px-6">
+  <div v-if="!loaded">Loading</div>
+  <div v-else class="flex flex-col h-screen px-6">
     <component :is="layout">
       <router-view/>
     </component>
@@ -24,6 +25,10 @@ export default {
   computed: {
     layout() {
       return `${this.$route.meta.layout || 'empty'}-layout`;
+    },
+    loaded() {
+      console.log(this.$store.getters.loaded);
+      return this.$store.getters.loaded;
     },
   },
 };
