@@ -19,6 +19,7 @@
           <li
             v-for="item in menu"
             :key="item.name"
+            v-if="!item.job || item?.job === userJob"
           >
             <router-link class="flex items-center gap-8" :to="item.link">
               <div
@@ -82,6 +83,12 @@ export default {
           name: 'news',
           link: '/news',
         },
+        {
+          title: 'asdf',
+          name: 'news',
+          link: '/news',
+          job: 'student',
+        },
       ],
       [],
     ],
@@ -119,6 +126,9 @@ export default {
     },
     avatar() {
       return this.$store.getters.user?.avatar || '/img/icons/avatar-girl.svg';
+    },
+    userJob() {
+      return this.$store.getters.user?.job;
     },
   },
 };
