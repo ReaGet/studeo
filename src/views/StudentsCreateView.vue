@@ -38,7 +38,7 @@
 /* eslint-disable */
 import VInput from '@/components/ui/InputComponent.vue';
 import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
-import { auth, database, secondAuth } from '@/utils/firebase';
+import { database, secondAuth } from '@/utils/firebase';
 import { onValue, ref, set } from 'firebase/database';
 
 function generatePassword() {
