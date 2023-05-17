@@ -64,15 +64,27 @@ export default {
           job: '',
         },
         {
+          title: 'Электронный пропуск',
+          name: 'pass',
+          link: '/pass',
+          job: 'student',
+        },
+        {
+          title: 'Успеваемость',
+          name: 'diary',
+          link: '/diary',
+          job: 'student',
+        },
+        {
           title: 'Расписание',
           name: 'schedule',
           link: '/schedule',
-          job: '',
+          job: 'student',
         },
         {
           title: 'Библиотека',
           name: 'library',
-          link: '/registration',
+          link: '/library',
           job: '',
         },
         {

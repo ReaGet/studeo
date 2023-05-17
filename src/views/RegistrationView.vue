@@ -28,13 +28,14 @@
           id="group"
           class="h-[52px] indent-4 px-4 py-6 text-2xl text-black bg-primary-light rounded-lg outline-none"
           name="group"
-          v-model="group"
+          @change="handleGroup"
         >
           <option value="default" selected="selected">Выберите группу</option>
           <option
             v-for="item in groups"
             :key="item.group"
             :value="item.group"
+            :data-subject="item.subject"
           >{{ item.group }} - {{ item.subject }}</option>
         </select>
       </label>
@@ -108,6 +109,13 @@ export default {
           subject: data[key].subject,
         };
       });
+    },
+    handleGroup(event) {
+      const value = event.target.value;
+      const option = event.target.querySelector('option:checked');
+      const subject = option.dataset.subject;
+      this.group = value;
+      this.subject = subject;
     },
     async handleSubmit() {
       if (this.password !== this.password_verify

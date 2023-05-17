@@ -187,6 +187,12 @@ const routes = [
     meta: { layout: 'main', title: 'Список группы', auth: true, job: 'teacher' },
     component: () => import('@/views/group/SingleGroupView.vue'),
   },
+  {
+    path: '/library',
+    name: 'library',
+    meta: { layout: 'main', title: 'Библиотека', auth: true },
+    component: () => import('@/views/LibraryView.vue'),
+  },
 ];
 
 const router = createRouter({
