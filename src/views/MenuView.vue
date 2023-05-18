@@ -102,6 +102,12 @@ export default {
       ],
       [
         {
+          title: 'Чаты',
+          name: 'chat',
+          link: '/chat',
+          job: '',
+        },
+        {
           title: 'Группы',
           name: 'teachers',
           link: '/groups',

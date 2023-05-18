@@ -9,42 +9,53 @@
 </template>
 
 <script>
+/* eslint-disable */
 import ChatListItem from '@/components/ChatListItem.vue';
+import { equalTo, onValue, orderByChild, query, ref } from 'firebase/database';
+import { database } from '@/utils/firebase';
 
 export default {
   components: {
     ChatListItem,
   },
   data: () => ({
-    chatList: [
-      {
-        id: 1,
-        chatType: 'group',
-        title: 'Групповой чат',
-        avatar: '/img/images/avatar-anime.png',
-        newMessagesCount: 3,
-        lastMessage: {
-          uid: 1,
-          text: 'Привет, ты не забыл, что у тебя допка?',
-          avatar: '/img/images/avatar-anime.png',
-          name: 'Игорь Романов',
-          timestamp: '2 мин',
-        },
-      },
-      {
-        id: 2,
-        chatType: 'single',
-        avatar: '/img/images/avatar-anime.png',
-        newMessagesCount: 37,
-        lastMessage: {
-          uid: 1,
-          text: 'Ты закончил верстку? Её натянем или теб...',
-          avatar: '/img/images/avatar-anime.png',
-          name: 'Сергей Константинович',
-          timestamp: '4 мин',
-        },
-      },
-    ],
+    chatList: [],
+    // chatList: [
+    //   {
+    //     id: 1,
+    //     chatType: 'group',
+    //     title: 'Групповой чат',
+    //     avatar: '/img/images/avatar-anime.png',
+    //     newMessagesCount: 3,
+    //     lastMessage: {
+    //       uid: 1,
+    //       text: 'Привет, ты не забыл, что у тебя допка?',
+    //       avatar: '/img/images/avatar-anime.png',
+    //       name: 'Игорь Романов',
+    //       timestamp: '2 мин',
+    //     },
+    //   },
+    //   {
+    //     id: 2,
+    //     chatType: 'single',
+    //     avatar: '/img/images/avatar-anime.png',
+    //     newMessagesCount: 37,
+    //     lastMessage: {
+    //       uid: 1,
+    //       text: 'Ты закончил верстку? Её натянем или теб...',
+    //       avatar: '/img/images/avatar-anime.png',
+    //       name: 'Сергей Константинович',
+    //       timestamp: '4 мин',
+    //     },
+    //   },
+    // ],
   }),
+  mounted() {
+    const chatsRef = ref(database, 'chatrooms');
+    onValue(chatsRef, (snapshot) => {
+      const data = snapshot.val();
+      console.log(data);
+    });
+  },
 };
 </script>

@@ -2,7 +2,7 @@
   <div class="flex flex-col pb-6 gap-6">
     <UserListItem
       v-for="user of users"
-      :key="user.id"
+      :key="user.uid"
       :user="user"
     ></UserListItem>
   </div>
@@ -42,7 +42,7 @@ export default {
             });
 
             const items = {
-              id,
+              uid: uid,
               ...data[id].info,
             };
 

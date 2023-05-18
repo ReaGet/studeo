@@ -49,7 +49,7 @@
 export default {
   props: {
     user: {
-      id: {
+      uid: {
         type: Number,
       },
       firstName: {
@@ -86,7 +86,7 @@ export default {
       return this.user.avatar || '/img/icons/avatar-girl.svg';
     },
     routeTo() {
-      return `/profile/${this.user.id}`;
+      return `/profile/${this.user.uid}`;
     },
   },
 };

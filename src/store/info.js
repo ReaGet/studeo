@@ -71,6 +71,7 @@ export default {
           Object.keys(data).forEach((key) => {
             data[key] && (params[key] = data[key]);
           });
+          params.uid = uid;
           commit('setUser', params);
         } else {
           commit('setUser', null);
