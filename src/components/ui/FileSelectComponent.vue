@@ -14,7 +14,7 @@
     >
       {{ title }}
       <svg
-        class="absolute right-10"
+        class="absolute right-10 fill-primary-default"
         width="30"
         height="30"
       >

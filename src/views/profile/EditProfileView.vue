@@ -25,7 +25,7 @@
           @change="handleImage"
           accept="image/*"
         >
-        <svg width="25" height="25">
+        <svg class="fill-primary-default" width="25" height="25">
           <use xlink:href="/img/icons/sprite.svg#camera"></use>
         </svg>
       </label>

@@ -10,7 +10,7 @@
     </button>
     <h1 class="text-3xl text-primary-default font-bold">{{ title }}</h1>
     <router-link v-if="$route.meta.action" class="absolute right-0" :to="routeLink">
-      <svg class="stroke-primary-default" width="25" height="16">
+      <svg class="fill-primary-default stroke-primary-default" width="25" height="16">
         <use xlink:href="/img/icons/sprite.svg#add"></use>
       </svg>
     </router-link>

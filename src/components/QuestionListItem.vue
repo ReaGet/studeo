@@ -13,13 +13,13 @@
       </div>
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <svg width="15" height="15">
+          <svg class="fill-primary-default" width="15" height="15">
             <use xlink:href="/img/icons/sprite.svg#date"></use>
           </svg>
           <span class="text-[1rem] text-primary-default">{{ question.date }}</span>
         </div>
         <div class="flex items-center gap-3">
-          <svg width="15" height="15">
+          <svg class="stroke-primary-default" width="15" height="15">
             <use xlink:href="/img/icons/sprite.svg#comment"></use>
           </svg>
           <span class="text-[1rem] text-primary-default">{{ question.answersCount }} ответов</span>

@@ -23,14 +23,21 @@
           alt="аватар"
         >
       </div>
-      <button
+      <!-- <button
         class="absolute flex items-center justify-center w-16 h-16 bottom-0 -right-20"
         @click="handleChatButtonClick"
       >
         <svg class="fill-primary-default" width="40" height="40">
           <use xlink:href="/img/icons/sprite.svg#message"></use>
         </svg>
-      </button>
+      </button> -->
+      <div class="absolute flex items-center justify-center w-16 h-16 bottom-0 -right-20">
+        <chat-button
+          v-if="user.uid"
+          :friendId="user.uid"
+          :size="40"
+        ></chat-button>
+      </div>
     </div>
     <div class="w-full">
       <form class="flex flex-col w-full gap-8">
@@ -63,17 +70,12 @@
 <script>
 /* eslint-disable */
 import VInput from '@/components/ui/InputComponent.vue';
+import ChatButton from '@/components/ChatButton.vue';
 import {
   ref,
   onValue,
-  query,
-  orderByKey,
-  orderByChild,
-  equalTo,
-  push,
-  set
 } from 'firebase/database';
-import { database, auth } from '@/utils/firebase';
+import { database } from '@/utils/firebase';
 
 const uData = {
   chatroomId: 'id',
@@ -100,7 +102,7 @@ const cData = {
 };
 
 export default {
-  components: { VInput },
+  components: { VInput, ChatButton },
   data: () => ({
     chatId: '',
     hasChat: false,
@@ -121,10 +123,12 @@ export default {
     isTeacher() {
       return this.user.job === 'teacher';
     },
+    friendIdLoaded() {
+      return this.user.uid;
+    },
   },
   async mounted() {
     await this.fetchUserInfo();
-    this.getChatLink();
   },
   methods: {
     fetchUserInfo() {
@@ -141,65 +145,6 @@ export default {
           this.user = params;
         }
       });
-    },
-    getChatLink() {
-      const { uid, currentUid } = this.getUserIds();
-      const chatQuery = query(
-        ref(database, `users/${currentUid}/chatrooms`),
-        orderByChild('uid'),
-        equalTo(uid),
-      );
-      onValue(chatQuery, (snapshot) => {
-        console.log(snapshot.val());
-        const data = snapshot.val();
-        if (data) {
-          const chatId = Object.keys(data)[0];
-          this.hasChat = true;
-          this.chatId = chatId;
-        }
-      });
-    },
-    handleChatButtonClick() {
-      if (this.hasChat) {
-        this.$router.push({
-          name: 'singleChat',
-          params: {
-            id: this.chatId,
-          }
-        });
-        return;
-      }
-      this.createChat();
-    },
-    async createChat() {
-      const { uid, currentUid } = this.getUserIds();
-      const formData = {
-        users: {
-          [uid]: true,
-          [currentUid]: true,
-        },
-        title: '',
-        lastMessage: '',
-        image: {
-          [uid]: this.$store.getters.user.avatar,
-          [currentUid]: this.user.avatar,
-        },
-      };
-      await push(ref(database,'chatrooms'), formData).then((snapshot) => {
-        const chatId = snapshot.key;
-        this.setUserChatInfo(uid, currentUid, chatId);
-        this.setUserChatInfo(currentUid, uid, chatId);
-        this.$router.push({
-          name: 'chat',
-          params: { id: chatId },
-        })
-        console.log('Chat created!');
-      });
-    },
-    setUserChatInfo(uid, uid2, chatId) {
-        set(ref(database, `users/${uid}/chatrooms/${chatId}`), {
-          uid: uid2,
-        });
     },
     getUserIds() {
       const uid = this.$store.getters.user.uid;

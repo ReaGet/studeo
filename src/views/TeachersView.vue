@@ -42,7 +42,7 @@ export default {
             });
 
             const items = {
-              uid: uid,
+              uid: id,
               ...data[id].info,
             };
 

@@ -30,7 +30,14 @@
         class="text-[1rem] leading-[1rem] text-white"
       >{{ user.subject }}</span>
     </div>
-    <button class="ml-auto">
+    <div class="ml-auto">
+      <chat-button
+        v-if="user.uid"
+        :friendId="user.uid"
+        :color="chatButtonColor"
+      ></chat-button>
+    </div>
+    <!-- <button class="ml-auto">
       <svg
         :class="{
           'fill-white': isTeacher,
@@ -41,12 +48,15 @@
       >
         <use xlink:href="/img/icons/sprite.svg#message"></use>
       </svg>
-    </button>
+    </button> -->
   </div>
 </template>
 
 <script>
+import ChatButton from '@/components/ChatButton.vue';
+
 export default {
+  components: { ChatButton },
   props: {
     user: {
       uid: {
@@ -87,6 +97,9 @@ export default {
     },
     routeTo() {
       return `/profile/${this.user.uid}`;
+    },
+    chatButtonColor() {
+      return this.isTeacher ? 'fill-white' : 'fill-primary-default';
     },
   },
 };
