@@ -51,11 +51,39 @@ export default {
     // ],
   }),
   mounted() {
-    const chatsRef = ref(database, 'chatrooms');
-    onValue(chatsRef, (snapshot) => {
-      const data = snapshot.val();
-      console.log(data);
-    });
+    this.loadUserChasInfo();
+  },
+  methods: {
+    loadUserChasInfo() {
+      const { uid } = this.$store.getters.user;
+      const userChatsRef = ref(database, `users/${uid}/chatrooms`);
+      onValue(userChatsRef, (snapshot) => {
+        const data = snapshot.val() || [];
+        const chatIds = Object.keys(data).map((id) => {
+          return id;
+        });
+        this.loadChats(chatIds);
+      });
+    },
+    loadChats(chatIds) {
+      if (!chatIds.length) {
+        return;
+      }
+      const chatsRef = ref(database, 'chatrooms');
+      onValue(chatsRef, (snapshot) => {
+        const data = snapshot.val();
+        const chats = [];
+        chatIds.map((id) => {
+          if (data[id]) {
+            chats.push({
+              id,
+              ...data[id],
+            });
+          }
+          this.chatList = chats;
+        });
+      });
+    },
   },
 };
 </script>

@@ -1,25 +1,29 @@
 <template>
-  <div class="flex items-center p-4 rounded-xl gap-4 bg-gray-100">
-    <div class="h-20 w-20 overflow-hidden rounded-xl">
-      <img
-        width="50"
-        height="50"
-        :src="chat.avatar"
-        alt="title"
-      >
+  <router-link :to="`/chat/${this.chat.id}`">
+    <div class="flex items-center p-4 rounded-xl gap-4 bg-gray-100">
+      <div class="h-20 w-20 overflow-hidden rounded-xl bg-primary-light">
+        <img
+          v-if="user.image"
+          class="h-full w-full object-cover"
+          width="50"
+          height="50"
+          :src="user.image"
+          alt="title"
+        >
+      </div>
+      <div class="flex flex-col justify-center gap-2">
+        <b class="text-xl leading-[1.25rem] text-black">{{ user.name }}</b>
+        <span class="text-[1rem] leading-[1rem] text-gray-300">{{ chat.lastMessage.text }}</span>
+      </div>
+      <div class="shrink-0 ml-auto text-center">
+        <span
+          class="block text-[1rem] leading-[1rem] text-gray-300"
+        >{{ time }}</span>
+        <!-- eslint-disable-next-line max-len -->
+        <span v-if="newMessagesCount" class="inline-block text-center py-1 px-3 mt-2 rounded-full bg-primary-default text-white">{{ newMessagesCount }}</span>
+      </div>
     </div>
-    <div class="flex flex-col justify-center gap-2">
-      <b class="text-xl leading-[1.25rem] text-black">Игорь романов</b>
-      <span class="text-[1rem] leading-[1rem] text-gray-300">{{ chat.lastMessage.text }}</span>
-    </div>
-    <div class="shrink-0 ml-auto text-center">
-      <span
-        class="block text-[1rem] leading-[1rem] text-gray-300"
-      >{{ chat.lastMessage.timestamp }}</span>
-      <!-- eslint-disable-next-line max-len -->
-      <span class="inline-block text-center py-1 px-3 mt-2 rounded-full bg-primary-default text-white">{{ chat.newMessagesCount }}</span>
-    </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
@@ -38,30 +42,36 @@ export default {
         type: String,
         default: 'Chat name',
       },
-      avatar: {
-        type: String,
+      image: {
+        type: Object,
       },
       newMessagesCount: {
         type: Number,
       },
       lastMessage: {
-        uid: {
-          type: Number,
-          required: true,
-        },
         text: {
           type: String,
-        },
-        avatar: {
-          type: String,
-        },
-        name: {
-          type: String,
+          default: '',
         },
         timestamp: {
           type: String,
+          default: '',
         },
       },
+    },
+  },
+  computed: {
+    time() {
+      return this.formatTime(this.chat.lastMessage.timestamp);
+    },
+    newMessagesCount() {
+      return this.chat.newMessagesCount || 0;
+    },
+    user() {
+      const { uid } = this.$store.getters.user;
+      const { users } = this.chat;
+      const id = Object.keys(users).filter((_id) => _id !== uid)[0];
+      return users[id] || {};
     },
   },
 };

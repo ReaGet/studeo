@@ -4,7 +4,7 @@
     :class="{ 'ml-auto': isCurrentUser }"
   >
     <p
-      class="p-4 rounded-lg bg-primary-default text-2xl text-white"
+      class="p-4 rounded-lg bg-primary-default text-2xl text-white whitespace-pre"
       :class="{
         'rounded-bl-none': !isCurrentUser,
         'rounded-br-none': isCurrentUser,
@@ -43,24 +43,7 @@ export default {
   },
   computed: {
     time() {
-      let delta = Math.abs(new Date(this.message.timestamp) - new Date()) / 1000;
-      let days = Math.floor(delta / 86400);
-      delta -= days * 86400;
-      let hours = Math.floor(delta / 3600) % 24;
-      delta -= hours * 3600;
-      let minutes = Math.floor(delta / 60) % 60;
-      delta -= minutes * 60;
-      let seconds = delta % 60;
-      if (days > 0) {
-        return `${~~days} дней назад`;
-      }
-      if (hours > 0) {
-        return `${~~hours} часов назад`;
-      }
-      if (minutes > 0) {
-        return `${~~minutes} минут назад`;
-      }
-      return `${~~seconds} секунд назад`;
+      return this.formatTime(this.message.timestamp);
     },
   },
 };

@@ -26,7 +26,10 @@
       class="absolute h-12 bottom-[-1px] left-0 right-0 bg-white rounded-tl-full rounded-tr-full"
     ></div>
   </header>
-  <div class="message__list flex flex-col flex-1 items-start py-6 gap-4 overflow-auto">
+  <div
+    ref="messageList"
+    class="message__list flex flex-col flex-1 items-start py-6 gap-4 overflow-auto"
+  >
     <MessageListItem
       v-for="message in chat.messages"
       :key="message.id"
@@ -73,7 +76,7 @@
 import MessageListItem from '@/components/MessageListItem.vue';
 import VTextarea from '@/components/ui/TextareaComponent.vue';
 import { database } from '@/utils/firebase';
-import { ref, query, onValue, orderByChild, equalTo, push } from 'firebase/database';
+import { ref, set, query, onValue, orderByChild, equalTo, push } from 'firebase/database';
 
 export default {
   components: {
@@ -161,6 +164,9 @@ export default {
   }),
   mounted() {
     this.loadMessages();
+    setTimeout(() => {
+      this.scrollView();
+    }, 200);
   },
   methods: {
     loadMessages() {
@@ -168,6 +174,7 @@ export default {
       const chatRef = ref(database, `chatrooms/${id}`);
       onValue(chatRef, (snapshot) => {
         const data = snapshot.val();
+        console.log(data);
         this.loadFriendData(data);
         this.chat = {
           id,
@@ -178,9 +185,9 @@ export default {
     loadFriendData(data) {
       const { uid } = this.$store.getters.user;
       let friendId = null;
-      Object.keys(data.users).forEach((key) => {
-        if (key !== uid) {
-          friendId = key;
+      Object.keys(data.users).forEach((id) => {
+        if (id !== uid) {
+          friendId = id;
         }
       });
       const friendQuery = ref(database, `users/${friendId}`);
@@ -199,9 +206,20 @@ export default {
         name: `${lastname} ${firstname}`,
         timestamp: new Date().toJSON(),
       }).then(() => {
-        console.log('message sended', this.message);
+        console.log('message sent', this.message);
+        this.setLastMessage(this.message);
         this.message = '';
+        this.scrollView();
       });
+    },
+    setLastMessage(message) {
+      set(ref(database, `chatrooms/${this.chat.id}/lastMessage`), {
+        text: message,
+        timestamp: new Date().toJSON(),
+      });
+    },
+    scrollView() {
+      this.$refs.messageList.scrollTop = this.$refs.messageList.offsetHeight;
     },
   },
   computed: {

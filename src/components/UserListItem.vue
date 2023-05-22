@@ -33,7 +33,7 @@
     <div class="ml-auto">
       <chat-button
         v-if="user.uid"
-        :friendId="user.uid"
+        :friend="user"
         :color="chatButtonColor"
       ></chat-button>
     </div>

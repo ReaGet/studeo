@@ -23,8 +23,8 @@ import { database } from '@/utils/firebase';
 
 export default {
   props: {
-    friendId: {
-      type: String,
+    friend: {
+      type: Object,
       required: true,
     },
     size: {
@@ -42,14 +42,13 @@ export default {
   methods: {
     getChatLink() {
       const uid = this.$store.getters.user.uid;
-      const friendId = this.friendId;
+      const friendId = this.friend.uid;
       const chatQuery = query(
         ref(database, `users/${friendId}/chatrooms`),
         orderByChild('uid'),
         equalTo(uid),
       );
       onValue(chatQuery, (snapshot) => {
-        console.log(snapshot.val());
         const data = snapshot.val();
         if (data) {
           const chatId = Object.keys(data)[0];
@@ -72,25 +71,31 @@ export default {
       this.createChat();
     },
     async createChat() {
-      const uid = this.$store.getters.user.uid;
-      const friendId = this.friendId;
+      const { uid, lastname, firstname, avatar } = this.$store.getters.user;
+      const friendId = this.friend.uid;
       const formData = {
         users: {
-          [uid]: true,
-          [friendId]: true,
+          [friendId]: {
+            name: `${this.friend.lastname} ${this.friend.firstname}`,
+            image: this.friend.avatar || '',
+          },
+          [uid]: {
+            name: `${lastname} ${firstname}`,
+            image: avatar || '',
+          },
         },
         title: '',
         lastMessage: '',
-        image: {},
+        // image: {},
       };
 
-      if (this.$store.getters.user?.avatar) {
-        formData.image[uid] = this.$store.getters.user.avatar;
-      }
+      // if (this.$store.getters.user?.avatar) {
+      //   formData.image[uid] = this.$store.getters.user.avatar;
+      // }
 
-      if (this.user?.avatar) {
-        formData.image[friendId] = this.user.avatar;
-      }
+      // if (this.friend?.avatar) {
+      //   formData.image[friendId] = this.friend.avatar;
+      // }
 
       const response = await push(ref(database,'chatrooms'), formData);
       const chatId = response.key;
