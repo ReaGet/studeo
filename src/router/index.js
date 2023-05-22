@@ -149,7 +149,13 @@ const routes = [
     path: '/schedule',
     name: 'schedule',
     meta: { layout: 'main', title: 'Расписание занятий', auth: true },
-    component: () => import('@/views/ScheduleView.vue'),
+    component: () => import('@/views/schedule/ScheduleView.vue'),
+  },
+  {
+    path: '/schedule/create',
+    name: 'scheduleCreate',
+    meta: { layout: 'main', title: 'Создание расписания', auth: true },
+    component: () => import('@/views/schedule/ScheduleCreateView.vue'),
   },
   {
     path: '/diary',

@@ -120,6 +120,12 @@ export default {
           job: 'teacher',
         },
         {
+          title: 'Создание расписания',
+          name: 'schedule',
+          link: '/schedule/create',
+          job: 'teacher',
+        },
+        {
           title: 'Одногруппники',
           name: 'friends',
           link: '/friends',
