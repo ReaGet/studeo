@@ -77,30 +77,6 @@ import {
 } from 'firebase/database';
 import { database } from '@/utils/firebase';
 
-const uData = {
-  chatroomId: 'id',
-  users: {
-    0: 'uid1',
-    1: 'uid2',
-    2: 'uid3',
-  },
-};
-
-const cData = {
-  users: {
-    0: 'uid1',
-    1: 'uid2',
-    2: 'uid3',
-  },
-  title: 'title',
-  lastMessage: 'asdasd',
-  image: {
-    uid1: '',
-    uid2: '',
-  },
-  messages: [],
-};
-
 export default {
   components: { VInput, ChatButton },
   data: () => ({
