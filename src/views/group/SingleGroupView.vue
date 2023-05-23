@@ -1,5 +1,11 @@
+<!-- eslint-disable -->
 <template>
   <div class="flex flex-col pb-6 gap-6">
+    <button
+      v-if="isTeacher"
+      @click="handleRedirect"
+      class="px-4 py-6 mt-8 text-2xl text-black text-center bg-primary-light rounded-lg outline-none"
+    >Расписание</button>
     <UserListItem
       v-for="user of users"
       :key="user.uid"
@@ -20,6 +26,7 @@ export default {
   },
   data: () => ({
     users: {},
+    group: '',
     // friendList: [
     //   {
     //     id: 1,
@@ -53,6 +60,7 @@ export default {
   methods: {
     fetchUsers() {
       const { group } = this.$route.params;
+      this.group = group;
       const usersQuery = query(
         ref(database, 'users'),
         orderByChild('info/group'),
@@ -75,7 +83,20 @@ export default {
     async filterUsers(users) {
       const currentUserId = await this.$store.dispatch('getUid');
       return users.filter((user) => user.id !== currentUserId);
-    }
+    },
+    handleRedirect() {
+      this.$router.push({
+        name: 'scheduleTeacher',
+        params: {
+          group: this.group,
+        },
+      });
+    },
+  },
+  computed: {
+    isTeacher() {
+      return this.$store.getters.user.job === 'teacher';
+    },
   },
 };
 </script>

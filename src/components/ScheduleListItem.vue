@@ -7,7 +7,7 @@
     </div>
     <div class="flex flex-col py-2 gap-2">
       <div
-        v-for="item in daySchedule.items"
+        v-for="item in daySchedule.subjects"
         :key="item.subject"
         class="flex items-center justify-between gap-4"
       >
@@ -15,11 +15,11 @@
           <b class="text-xl leading-[1.25rem]">{{ item.subject }}</b>
           <span
             v-if="item.info"
-            class="text-lg text-gray-300 leading-[1.125rem]"
+            class="mt-1 text-lg text-gray-300 leading-[1.125rem]"
           >{{ item.info }}</span>
         </div>
         <div class="flex items-center h-full py-3 px-4 bg-gray-100 rounded-xl">
-          {{ convertTime(item.time) }}
+          {{ convertTime(item.timeStart, item.timeEnd) }}
         </div>
         <div
           class="flex items-center h-full py-3 px-4 bg-gray-100 rounded-xl"
@@ -37,7 +37,7 @@ export default {
       timestamp: {
         type: String,
       },
-      items: {
+      subjects: {
         type: Array,
         required: true,
       },
@@ -53,17 +53,14 @@ export default {
     },
   },
   methods: {
-    convertTime(time) {
+    convertTime(timeStart, timeEnd) {
       const format = (t) => {
         return t.toLocaleTimeString([], {
           hour: '2-digit',
           minute:'2-digit',
         });
       }
-      const date = new Date(time);
-      date.setHours(date.getHours() + 1);
-      date.setMinutes(date.getMinutes() + 30);
-      return `${format(new Date(time))} - ${format(date)}`;
+      return `${format(new Date(timeStart))} - ${format(new Date(timeEnd))}`;
     },
   },
 };

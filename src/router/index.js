@@ -7,7 +7,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    meta: { layout: 'main', auth: false },
+    meta: { layout: 'basic', auth: false },
     component: () => import('@/views/HomeView.vue'),
   },
   {
@@ -148,6 +148,12 @@ const routes = [
   {
     path: '/schedule',
     name: 'schedule',
+    meta: { layout: 'main', title: 'Расписание занятий', auth: true },
+    component: () => import('@/views/schedule/ScheduleView.vue'),
+  },
+  {
+    path: '/schedule/:group',
+    name: 'scheduleTeacher',
     meta: { layout: 'main', title: 'Расписание занятий', auth: true },
     component: () => import('@/views/schedule/ScheduleView.vue'),
   },

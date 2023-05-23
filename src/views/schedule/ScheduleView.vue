@@ -114,7 +114,10 @@ export default {
   },
   methods: {
     fetchSchedule() {
-      const { group } = this.$store.getters.user;
+      let group = this.$store.getters.user.group;
+      if (!group) {
+        group = this.$route.params.group;
+      }
       const scheduleQuery = query(
         ref(database, 'schedule'),
         orderByChild('group'),
@@ -127,7 +130,7 @@ export default {
           const item = data[key];
           return {
             timestamp: item.timestamp,
-            items: item.subjects,
+            subjects: item.subjects,
           }
         });
       });

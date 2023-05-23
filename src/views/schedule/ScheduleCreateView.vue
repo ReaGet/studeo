@@ -33,6 +33,16 @@
           class="px-4 py-6 mt-8 text-2xl text-white bg-primary-300 rounded-lg outline-none"
         >Добавить предмет</button>
       </div>
+      <div
+        v-if="scheduleList.length"
+        class="flex flex-col gap-6"
+      >
+        <ScheduleListItem
+          v-for="item in scheduleList"
+          :key="item.timestamp.toString()"
+          :daySchedule="item"
+        ></ScheduleListItem>
+      </div>
       <button
         @click="handleSubmit"
         class="px-4 py-6 mt-14 text-2xl text-white bg-primary-default rounded-lg outline-none"
@@ -46,12 +56,14 @@
 import { onValue, ref, push } from 'firebase/database';
 import { database } from '@/utils/firebase';
 import VInput from '@/components/ui/InputComponent.vue';
+import ScheduleListItem from '@/components/ScheduleListItem.vue';
 
 export default {
-  components: { VInput },
+  components: { VInput, ScheduleListItem },
   data: () => ({
     group: {},
     groups: [],
+    scheduleList: [],
     subjects: [],
     subject: '',
     date: '',
@@ -94,25 +106,41 @@ export default {
       };
     },
     createSubject() {
-      const date = new Date(`${this.date} ${this.time}`);
-      date.setHours(date.getHours() + 1);
-      date.setMinutes(date.getMinutes() + 1);
-      this.subjects.push({
-        subject: this.subject,
-        info: this.info,
-        time: date.toJSON(),
-        room: this.room,
+      const dateEnd = new Date(`${this.date} ${this.time}`);
+      dateEnd.setHours(dateEnd.getHours() + 1);
+      dateEnd.setMinutes(dateEnd.getMinutes() + 30);
+      const timestamp = new Date(this.date).toJSON();
+      const check = this.scheduleList.find((item) => item.timestamp = timestamp);
+      if (!check) {
+        this.scheduleList.push({
+          timestamp,
+          subjects: [],
+        });
+      }
+      this.scheduleList.map((item) => {
+        if (item.timestamp === timestamp) {
+          item.subjects.push({
+            subject: this.subject,
+            info: this.info,
+            timeStart: new Date(`${this.date} ${this.time}`).toJSON(),
+            timeEnd: dateEnd.toJSON(),
+            room: this.room,
+          });
+        }
       });
+
       this.subject = '';
       this.info = '';
       this.time = '';
       this.room = '';
     },
     async handleSubmit() {
+      const timestamp = new Date(this.date).toJSON();
+      const item = this.scheduleList.find((item) => item.timestamp = timestamp);
       const formData = {
         group: this.group.group,
         timestamp: new Date(this.date).toJSON(),
-        subjects: this.subjects,
+        subjects: item.subjects,
       };
       console.log(formData);
       try {

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!loaded">Loading</div>
+  <LoadingView v-if="!loaded"></LoadingView>
   <div v-else class="flex flex-col h-screen px-6">
     <component :is="layout">
       <router-view/>
@@ -15,9 +15,11 @@
 import MainLayout from '@/layouts/MainLayout.vue';
 import EmptyLayout from '@/layouts/EmptyLayout.vue';
 import BasicLayout from '@/layouts/BasicLayout.vue';
+import LoadingView from '@/views/LoadingView.vue';
 
 export default {
   components: {
+    LoadingView,
     MainLayout,
     EmptyLayout,
     BasicLayout,
