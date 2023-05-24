@@ -11,8 +11,9 @@
     <div class="flex flex-col items-center gap-2">
       <h1 class="text-4xl text-primary-default font-bold">{{ name }}</h1>
       <span class="hidden mt-4 text-3xl text-gray-default">Студент 3 курса</span>
-      <span class="mt-1 text-3xl text-gray-default">Группа {{ group }}</span>
-      <span class="mt-1 text-3xl text-gray-default">Кафедра {{ subject }}</span>
+      <span v-if="isTeacher" class="mt-1 text-3xl text-gray-default">Преподаватель</span>
+      <span v-if="!isTeacher" class="mt-1 text-3xl text-gray-default">Группа {{ group }}</span>
+      <span v-if="!isTeacher" class="mt-1 text-3xl text-gray-default">Кафедра {{ subject }}</span>
     </div>
   </div>
 </template>
@@ -33,6 +34,9 @@ export default {
     },
     group() {
       return this.$store.getters.user.group;
+    },
+    isTeacher() {
+      return this.$store.getters.user.job === 'teacher';
     },
     subject() {
       return this.groups.find((item) => item.group === this.group)?.subject;

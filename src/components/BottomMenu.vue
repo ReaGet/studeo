@@ -25,3 +25,13 @@
     </ul>
   </div>
 </template>
+
+<script>
+export default {
+  computed: {
+    isTeacher() {
+      return this.$store.getters.user?.job === 'teacher';
+    },
+  },
+};
+</script>
