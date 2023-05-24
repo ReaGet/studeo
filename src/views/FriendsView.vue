@@ -75,7 +75,8 @@ export default {
     async filterUsers(users) {
       const { job } = this.$route.meta;
       const currentUserId = await this.$store.dispatch('getUid');
-      return users.filter((user) => user.job === job && user.id !== currentUserId);
+      // return users.filter((user) => (console.log(user)) && user.job === job && user.uid !== currentUserId);
+      return users.filter((user) => user.job === job && user.uid !== currentUserId);
     }
   },
 };

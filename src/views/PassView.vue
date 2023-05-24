@@ -18,7 +18,14 @@
 </template>
 
 <script>
+/* eslint-disable */
+import { database } from '@/utils/firebase';
+import { onValue, ref } from '@firebase/database';
+
 export default {
+  data: () => ({
+    groups: [],
+  }),
   computed: {
     name() {
       const { firstname, lastname } = this.$store.getters.user;
@@ -28,7 +35,34 @@ export default {
       return this.$store.getters.user.group;
     },
     subject() {
-      return this.$store.getters.user.subject;
+      return this.groups.find((item) => item.group === this.group)?.subject;
+      // return this.$store.getters.user.subject;
+    },
+  },
+  mounted() {
+    this.fetchGroups();
+  },
+  methods: {
+    fetchGroups() {
+      const dataQuery = ref(database, 'groups');
+      onValue(dataQuery, async (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          this.groups = this.convertData(data);
+        }
+      });
+    },
+    convertData(data) {
+      if (!data) {
+        return [];
+      }
+      return Object.keys(data).map((key) => {
+        return {
+          id: key,
+          group: data[key].group,
+          subject: data[key].subject,
+        };
+      });
     },
   },
 };

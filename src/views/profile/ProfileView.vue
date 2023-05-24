@@ -23,18 +23,10 @@
           alt="аватар"
         >
       </div>
-      <!-- <button
-        class="absolute flex items-center justify-center w-16 h-16 bottom-0 -right-20"
-        @click="handleChatButtonClick"
-      >
-        <svg class="fill-primary-default" width="40" height="40">
-          <use xlink:href="/img/icons/sprite.svg#message"></use>
-        </svg>
-      </button> -->
       <div class="absolute flex items-center justify-center w-16 h-16 bottom-0 -right-20">
         <chat-button
           v-if="user.uid"
-          :friendId="user.uid"
+          :friend="user"
           :size="40"
         ></chat-button>
       </div>
@@ -60,6 +52,13 @@
           :title="'Предмет'"
           :name="'subject'"
           :modelValue="user.subject"
+          :disabled="true"
+        />
+        <v-input
+          v-if="currentUserTeacher"
+          :title="'Пароль'"
+          :name="'password'"
+          :modelValue="user.password"
           :disabled="true"
         />
       </form>
@@ -90,6 +89,7 @@ export default {
       group: '',
       subject: '',
       avatar: '',
+      password: '',
     },
   }),
   computed: {
@@ -98,6 +98,9 @@ export default {
     },
     isTeacher() {
       return this.user.job === 'teacher';
+    },
+    currentUserTeacher() {
+      return this.$store.getters.user.job === 'teacher';
     },
     friendIdLoaded() {
       return this.user.uid;

@@ -53,6 +53,12 @@
             >{{ item.group }} - {{ item.subject }}</option>
           </select>
         </label>
+        <v-input
+          :title="'Пароль'"
+          :name="'password'"
+          :modelValue="user.password"
+          :disabled="true"
+        />
         <button
           class="px-4 py-6 mt-14 text-2xl text-white bg-primary-default rounded-lg outline-none"
         >Сохранить</button>
@@ -85,6 +91,7 @@ export default {
         job: '',
         group: '',
         avatar: null,
+        password: '',
       },
       preview: '',
     };
