@@ -24,6 +24,7 @@ const routes = [
       title: 'Регистрация',
       back: false,
       auth: false,
+      menu: false,
     },
     component: () => import('@/views/RegistrationView.vue'),
   },
@@ -35,6 +36,7 @@ const routes = [
       title: 'Авторизация',
       back: false,
       auth: false,
+      menu: false,
     },
     component: () => import('@/views/LoginView.vue'),
   },
@@ -100,7 +102,12 @@ const routes = [
   {
     path: '/forum/create',
     name: 'forumCreate',
-    meta: { layout: 'main', title: 'Вопрос', auth: true },
+    meta: {
+      layout: 'main',
+      title: 'Вопрос',
+      auth: true,
+      menu: false,
+    },
     component: () => import('@/views/forum/ForumCreateView.vue'),
   },
   {
@@ -118,7 +125,12 @@ const routes = [
   {
     path: '/post/create',
     name: 'postCreate',
-    meta: { layout: 'main', title: 'Статья', auth: true },
+    meta: {
+      layout: 'main',
+      title: 'Статья',
+      auth: true,
+      menu: false,
+    },
     component: () => import('@/views/post/PostCreateView.vue'),
   },
   {
@@ -142,7 +154,10 @@ const routes = [
   {
     path: '/chat/:id',
     name: 'singleChat',
-    meta: { auth: true },
+    meta: {
+      auth: true,
+      menu: false,
+    },
     component: () => import('@/views/chat/SingleChatView.vue'),
   },
   {
@@ -160,7 +175,12 @@ const routes = [
   {
     path: '/schedule/create',
     name: 'scheduleCreate',
-    meta: { layout: 'main', title: 'Создание расписания', auth: true },
+    meta: {
+      layout: 'main',
+      title: 'Создание расписания',
+      auth: true,
+      menu: false,
+    },
     component: () => import('@/views/schedule/ScheduleCreateView.vue'),
   },
   {
@@ -172,7 +192,13 @@ const routes = [
   {
     path: '/students/create',
     name: 'studentsCreate',
-    meta: { layout: 'main', title: 'Создание студента', auth: true, job: 'teacher' },
+    meta: {
+      layout: 'main',
+      title: 'Создание студента',
+      auth: true,
+      job: 'teacher',
+      menu: false,
+    },
     component: () => import('@/views/StudentsCreateView.vue'),
   },
   {
@@ -190,7 +216,13 @@ const routes = [
   {
     path: '/groups/create',
     name: 'groupCreate',
-    meta: { layout: 'main', title: 'Создание группы', auth: true, job: 'teacher' },
+    meta: {
+      layout: 'main',
+      title: 'Создание группы',
+      auth: true,
+      job: 'teacher',
+      menu: false,
+    },
     component: () => import('@/views/group/GroupCreateView.vue'),
   },
   {

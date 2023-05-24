@@ -1,6 +1,6 @@
 <template>
   <LoadingView v-if="!loaded"></LoadingView>
-  <div v-else class="flex flex-col h-screen px-6">
+  <div v-else class="h-full min-h-screen px-6">
     <component :is="layout">
       <router-view/>
     </component>
