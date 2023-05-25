@@ -25,11 +25,11 @@ export default {
     BasicLayout,
   },
   mounted() {
-    this.setTheme();
+    this.loadTheme();
   },
   methods: {
-    setTheme() {
-      this.$store.dispatch('updateTheme', this.theme);
+    loadTheme() {
+      this.$store.dispatch('loadTheme', this.theme);
     },
   },
   computed: {
