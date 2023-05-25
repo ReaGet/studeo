@@ -24,6 +24,11 @@ export default {
     EmptyLayout,
     BasicLayout,
   },
+  methods: {
+    setTheme() {
+      this.$store.dispatch('updateTheme', this.theme);
+    },
+  },
   computed: {
     layout() {
       return `${this.$route.meta.layout || 'empty'}-layout`;
