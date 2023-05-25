@@ -24,6 +24,9 @@ export default {
     EmptyLayout,
     BasicLayout,
   },
+  mounted() {
+    this.setTheme();
+  },
   methods: {
     setTheme() {
       this.$store.dispatch('updateTheme', this.theme);
