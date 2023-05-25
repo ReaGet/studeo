@@ -117,6 +117,9 @@ export default {
     setUser(state, data) {
       state.user = { ...data, loaded: true };
     },
+    setLoaded(state, value) {
+      state.user.loaded = value;
+    },
     setGroups(state, data) {
       state.groups = data;
     },
