@@ -12,6 +12,11 @@
         >
       </div>
       <span class="text-3xl text-black font-bold">Привет, {{ name }}!</span>
+      <router-link class="ml-auto" to="/settings">
+        <svg class="fill-primary-default" width="28" height="28">
+          <use xlink:href="/img/icons/sprite.svg#settings"></use>
+        </svg>
+      </router-link>
     </div>
     <div class="flex flex-col divide-y divide-gray-light">
       <nav v-for="(menu, i) in menuItems" :key="i" >

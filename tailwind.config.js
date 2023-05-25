@@ -11,11 +11,14 @@ module.exports = {
       colors: {
         black: '#4A4A4A',
         primary: {
-          // default: '#5D76CB',
-          default: '#BAB4A3',
-          light: '#f5f4f1',
-          300: '#d3cbb2',
-          100: '#f6f7f9',
+          // default: '#BAB4A3',
+          // light: '#f5f4f1',
+          // 300: '#d3cbb2',
+          // 100: '#f6f7f9',
+          default: 'var(--color-primary)',
+          light: 'var(--color-primary-light)',
+          300: 'var(--color-primary-300)',
+          100: 'var(--color-primary-100)',
         },
         gray: {
           default: '#767676',

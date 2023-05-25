@@ -2,8 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-@import './font.css';
+@import '@/assets/font.css';
 
 body {
     font-family: 'Open Sans';
+}
+
+body.light {
+    --color-primary: #BAB4A3;
+    --color-primary-light: #f5f4f1;
+    --color-primary-300: #d3cbb2;
+    --color-primary-100: #f6f7f9;
+}
+
+body.blue {
+    --color-primary: #5D76CB;
+    --color-primary-light: #eff1fa;
+    --color-primary-300: #adb8df;
+    --color-primary-100: #f6f7f9;
 }
