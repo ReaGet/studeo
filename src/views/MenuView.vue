@@ -99,7 +99,7 @@ export default {
           job: '',
         },
         {
-          title: 'Статьи',
+          title: 'Новости',
           name: 'news',
           link: '/news',
           job: '',
